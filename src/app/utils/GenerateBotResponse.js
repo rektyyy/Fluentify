@@ -1,4 +1,4 @@
-import { fetchDefaultSpeakerEmbedding, streamTTS } from "./GetAudio";
+import { fetchDefaultSpeakerEmbedding, streamTTS } from "./Tts";
 
 const conversationRef = [
   {
@@ -17,7 +17,7 @@ const conversationRef = [
   // {sender: 'bot', message: "No problem, I'll be concise."},
 ];
 
-const generateBotResponse = async (text) => {
+const generateBotResponse = async (text, setBotReponse) => {
   const speakerRef = await fetchDefaultSpeakerEmbedding();
   let generated_text = "";
   let current_sentence = "";
@@ -74,6 +74,7 @@ const generateBotResponse = async (text) => {
               jsonObject.token.text === "?" ||
               jsonObject.token.text === "!"
             ) {
+              setBotReponse(generated_text);
               await streamTTS(current_sentence, speakerRef);
               current_sentence = "";
             }
@@ -104,11 +105,11 @@ const conv2prompt = (conv) => {
   return prompt;
 };
 
-export default async function sendMessage(message) {
+export default async function sendMessage(message, setBotReponse) {
   if (!message) return;
   conversationRef.push({ sender: "user", message });
   const prompt = conv2prompt(conversationRef);
-  let generated_text = await generateBotResponse(prompt);
+  let generated_text = await generateBotResponse(prompt, setBotReponse);
   conversationRef.push({ sender: "bot", message: generated_text });
   console.log(generated_text);
   return generated_text;

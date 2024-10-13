@@ -6,6 +6,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { useState, useEffect } from "react";
 import sendMessage from "../utils/GenerateBotResponse";
+
 export default function SpeechToText({ language }) {
   const {
     transcript,
@@ -23,9 +24,9 @@ export default function SpeechToText({ language }) {
   useEffect(() => {
     async function getMessage(transcript) {
       console.log("SENDING MESSAGE: " + transcript);
-      const message = await sendMessage(transcript);
+      const message = await sendMessage(transcript, setBotResponse);
       console.log(message);
-      setBotResponse(message);
+      //setBotResponse(message);
     }
     if (finalTranscript) {
       getMessage(finalTranscript).catch(console.error);
