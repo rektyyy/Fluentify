@@ -6,8 +6,9 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { useState, useEffect } from "react";
 import sendMessage from "../utils/GenerateBotResponse";
+import SelectLanguage from "./SelectLanguage";
 
-export default function SpeechToText({ language }) {
+export default function SpeechToText() {
   const {
     transcript,
     finalTranscript,
@@ -17,6 +18,7 @@ export default function SpeechToText({ language }) {
   } = useSpeechRecognition();
 
   const [botResponse, setBotResponse] = useState();
+  const [language, setLanguage] = useState(["en-US", "en"]);
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn't support speech recognition.</span>;
@@ -24,7 +26,11 @@ export default function SpeechToText({ language }) {
   useEffect(() => {
     async function getMessage(transcript) {
       console.log("SENDING MESSAGE: " + transcript);
-      const message = await sendMessage(transcript, setBotResponse);
+      const message = await sendMessage(
+        transcript,
+        setBotResponse,
+        language[1]
+      );
       console.log(message);
       //setBotResponse(message);
     }
@@ -35,8 +41,13 @@ export default function SpeechToText({ language }) {
 
   return (
     <div>
+      <SelectLanguage setLanguage={setLanguage} />
       <div>Microphone: {listening ? "on" : "off"}</div>
-      <button onClick={() => SpeechRecognition.startListening({ language })}>
+      <button
+        onClick={() =>
+          SpeechRecognition.startListening({ language: language[0] })
+        }
+      >
         Start
       </button>
       <button onClick={SpeechRecognition.stopListening}>Stop</button>

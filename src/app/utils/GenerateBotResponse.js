@@ -9,7 +9,8 @@ const conversationRef = [
   { sender: "bot", message: "No problem. Anything else?" },
   {
     sender: "user",
-    message: "Yeah, please always respond in a sentence or two from now on.",
+    message:
+      "Yeah, please always respond in a sentence or two from now on. Do not ignore when asked to change language.",
   },
   { sender: "bot", message: "Sure, I'll be concise." },
   // {sender: 'bot', message: "I am an advanced emulation of your favourite machine learning youtuber. I'm based on a deep learning system made by coqui. I'm made to explain machine learning to you, I know every paper there is. I say 'hold on to your papers' and 'mindblowing' a lot."},
@@ -17,7 +18,7 @@ const conversationRef = [
   // {sender: 'bot', message: "No problem, I'll be concise."},
 ];
 
-const generateBotResponse = async (text, setBotReponse) => {
+const generateBotResponse = async (text, setBotReponse, language) => {
   const speakerRef = await fetchDefaultSpeakerEmbedding();
   let generated_text = "";
   let current_sentence = "";
@@ -75,7 +76,7 @@ const generateBotResponse = async (text, setBotReponse) => {
               jsonObject.token.text === "!"
             ) {
               setBotReponse(generated_text);
-              await streamTTS(current_sentence, speakerRef);
+              await streamTTS(current_sentence, speakerRef, language);
               current_sentence = "";
             }
           }
@@ -90,14 +91,15 @@ const generateBotResponse = async (text, setBotReponse) => {
   return generated_text;
 };
 
-const conv2prompt = (conv) => {
+const conv2prompt = (conv, language) => {
   let prompt = "";
   for (let i = 0; i < conv.length; i++) {
     if (conv[i].sender === "user") {
+      const languageAddition = `User asked to use ${language} language for the rest of the conversation.`;
       prompt +=
         "GPT4 Correct User: " +
         conv[i].message +
-        "<|end_of_turn|>GPT4 Correct Assistant:";
+        `<|end_of_turn|> GPT4 Correct Assistant: ${languageAddition}`;
     } else {
       prompt += conv[i].message + "<|end_of_turn|>";
     }
@@ -105,11 +107,15 @@ const conv2prompt = (conv) => {
   return prompt;
 };
 
-export default async function sendMessage(message, setBotReponse) {
+export default async function sendMessage(message, setBotReponse, language) {
   if (!message) return;
   conversationRef.push({ sender: "user", message });
-  const prompt = conv2prompt(conversationRef);
-  let generated_text = await generateBotResponse(prompt, setBotReponse);
+  const prompt = conv2prompt(conversationRef, language);
+  let generated_text = await generateBotResponse(
+    prompt,
+    setBotReponse,
+    language
+  );
   conversationRef.push({ sender: "bot", message: generated_text });
   console.log(generated_text);
   return generated_text;

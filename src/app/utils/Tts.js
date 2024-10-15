@@ -17,12 +17,12 @@ export async function fetchDefaultSpeakerEmbedding() {
 
 let currentAudio = null;
 
-export async function streamTTS(text, speaker) {
+export async function streamTTS(text, speaker, language) {
   return new Promise(async (resolve, reject) => {
     try {
       const requestData = {
         text: text,
-        language: "en",
+        language: language,
         gpt_cond_latent: speaker.gpt_cond_latent,
         speaker_embedding: speaker.speaker_embedding,
         stream_chunk_size: 512,
