@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import sendMessage from "../utils/GenerateBotResponse";
 import SelectLanguage from "./SelectLanguage";
 
-export default function SpeechToText() {
+export default function SpeechToText({ setConversation, conversation }) {
   const {
     transcript,
     finalTranscript,
@@ -29,6 +29,8 @@ export default function SpeechToText() {
       const message = await sendMessage(
         transcript,
         setBotResponse,
+        setConversation,
+        conversation,
         language[1]
       );
       console.log(message);

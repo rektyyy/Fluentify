@@ -1,22 +1,22 @@
 import { fetchDefaultSpeakerEmbedding, streamTTS } from "./Tts";
 
-const conversationRef = [
-  {
-    sender: "user",
-    message:
-      "You are a large language model known as OpenChat, the open-source counterpart to ChatGPT, equally powerful as its closed-source sibling. You communicate using an advanced deep learning based speech synthesis system made by coqui, so feel free to include interjections (such as 'hmm', 'oh', 'right', 'wow'...), but avoid using emojis, symboles, code snippets, or anything else that does not translate well to spoken language. Fox exemple, instead of using % say percent, = say equal and for * say times etc... Also please avoid using lists with numbers as items like so 1. 2. Use regular sentences instead. Your purpose is to help user with learning languages.",
-  },
-  { sender: "bot", message: "No problem. Anything else?" },
-  {
-    sender: "user",
-    message:
-      "Yeah, please always respond in a sentence or two from now on. Do not ignore when asked to change language.",
-  },
-  { sender: "bot", message: "Sure, I'll be concise." },
-  // {sender: 'bot', message: "I am an advanced emulation of your favourite machine learning youtuber. I'm based on a deep learning system made by coqui. I'm made to explain machine learning to you, I know every paper there is. I say 'hold on to your papers' and 'mindblowing' a lot."},
-  // {sender: 'user', message: "Ok, please always respond in a sentence or two from now on."},
-  // {sender: 'bot', message: "No problem, I'll be concise."},
-];
+// const conversationRef = [
+//   {
+//     sender: "user",
+//     message:
+//       "You are a large language model known as OpenChat, the open-source counterpart to ChatGPT, equally powerful as its closed-source sibling. You communicate using an advanced deep learning based speech synthesis system made by coqui, so feel free to include interjections (such as 'hmm', 'oh', 'right', 'wow'...), but avoid using emojis, symboles, code snippets, or anything else that does not translate well to spoken language. Fox exemple, instead of using % say percent, = say equal and for * say times etc... Also please avoid using lists with numbers as items like so 1. 2. Use regular sentences instead. Your purpose is to help user with learning languages.",
+//   },
+//   { sender: "bot", message: "No problem. Anything else?" },
+//   {
+//     sender: "user",
+//     message:
+//       "Yeah, please always respond in a sentence or two from now on. Do not ignore when asked to change language.",
+//   },
+//   { sender: "bot", message: "Sure, I'll be concise." },
+//   // {sender: 'bot', message: "I am an advanced emulation of your favourite machine learning youtuber. I'm based on a deep learning system made by coqui. I'm made to explain machine learning to you, I know every paper there is. I say 'hold on to your papers' and 'mindblowing' a lot."},
+//   // {sender: 'user', message: "Ok, please always respond in a sentence or two from now on."},
+//   // {sender: 'bot', message: "No problem, I'll be concise."},
+// ];
 
 const generateBotResponse = async (text, setBotReponse, language) => {
   const speakerRef = await fetchDefaultSpeakerEmbedding();
@@ -107,16 +107,25 @@ const conv2prompt = (conv, language) => {
   return prompt;
 };
 
-export default async function sendMessage(message, setBotReponse, language) {
+export default async function sendMessage(
+  message,
+  setBotReponse,
+  setConversation,
+  conversation,
+  language
+) {
   if (!message) return;
-  conversationRef.push({ sender: "user", message });
-  const prompt = conv2prompt(conversationRef, language);
+  setConversation((prevConv) => [...prevConv, { sender: "user", message }]);
+  const prompt = conv2prompt(conversation, language);
   let generated_text = await generateBotResponse(
     prompt,
     setBotReponse,
     language
   );
-  conversationRef.push({ sender: "bot", message: generated_text });
+  setConversation((prevConv) => [
+    ...prevConv,
+    { sender: "bot", message: generated_text },
+  ]);
   console.log(generated_text);
   return generated_text;
 }
