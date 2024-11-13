@@ -32,12 +32,12 @@ export default function Home() {
 
   return (
     <div>
-      <h2>The new beginning</h2>
+      <h2>Learn languages here!</h2>
+      <ChatHistory conversation={conversation} />
       <SpeechToText
         setConversation={setConversation}
         conversation={conversation}
       />
-      <ChatHistory conversation={conversation} />
     </div>
   );
 }
