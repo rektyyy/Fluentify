@@ -10,7 +10,7 @@ services:
       - llm
       - tts
   llm:
-    image: ghcr.io/huggingface/text-generation-inference:1.1.0
+    image: ghcr.io/huggingface/text-generation-inference:2.4.0
     ports:
       - "8080:8080"
     environment:

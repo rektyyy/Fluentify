@@ -124,7 +124,7 @@ export default async function sendMessage(
   );
   setConversation((prevConv) => [
     ...prevConv,
-    { sender: "bot", message: generated_text },
+    { sender: "bot", message: generated_text.replace("<|end_of_turn|>", "") },
   ]);
   console.log(generated_text);
   return generated_text;
