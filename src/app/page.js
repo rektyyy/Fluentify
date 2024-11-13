@@ -31,7 +31,7 @@ export default function Home() {
   }, [conversation]);
 
   return (
-    <div>
+    <div className="p-4">
       <h2>Learn languages here!</h2>
       <ChatHistory conversation={conversation} />
       <SpeechToText

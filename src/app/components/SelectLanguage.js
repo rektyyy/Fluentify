@@ -4,7 +4,7 @@ export default function SelectLanguage({ setLanguage }) {
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-autoclose-true">
-        Dropdown Button
+        Select language
       </Dropdown.Toggle>
 
       <Dropdown.Menu>

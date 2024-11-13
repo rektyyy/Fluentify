@@ -69,7 +69,7 @@ export default function SpeechToText({ setConversation, conversation }) {
       <SelectLanguage setLanguage={setLanguage} />
       <div>Transcript: {transcript}</div>
       <div>Response: {botResponse}</div>
-      <InputGroup className="mb-3">
+      <InputGroup className="mb-3 mt-auto p-4">
         <FormControl
           placeholder="Type your message..."
           value={transcript ? transcript : input}
