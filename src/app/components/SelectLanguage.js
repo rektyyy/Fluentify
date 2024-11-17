@@ -1,6 +1,6 @@
 import Dropdown from "react-bootstrap/Dropdown";
 
-export default function SelectLanguage({ setLanguage }) {
+export default function SelectLanguage({ setLanguage, setChangedLanguage }) {
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-autoclose-true">
@@ -11,6 +11,7 @@ export default function SelectLanguage({ setLanguage }) {
         <Dropdown.Item
           onClick={() => {
             setLanguage(["en-US", "en"]);
+            setChangedLanguage(true);
             console.log("zmiana na en-US");
           }}
         >
@@ -19,6 +20,7 @@ export default function SelectLanguage({ setLanguage }) {
         <Dropdown.Item
           onClick={() => {
             setLanguage(["pl", "pl"]);
+            setChangedLanguage(true);
             console.log("zmiana na pl");
           }}
         >
@@ -27,6 +29,7 @@ export default function SelectLanguage({ setLanguage }) {
         <Dropdown.Item
           onClick={() => {
             setLanguage(["de", "de"]);
+            setChangedLanguage(true);
             console.log("zmiana na de");
           }}
         >

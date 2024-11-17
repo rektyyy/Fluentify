@@ -1,23 +1,5 @@
 import { fetchDefaultSpeakerEmbedding, streamTTS } from "./Tts";
 
-// const conversationRef = [
-//   {
-//     sender: "user",
-//     message:
-//       "You are a large language model known as OpenChat, the open-source counterpart to ChatGPT, equally powerful as its closed-source sibling. You communicate using an advanced deep learning based speech synthesis system made by coqui, so feel free to include interjections (such as 'hmm', 'oh', 'right', 'wow'...), but avoid using emojis, symboles, code snippets, or anything else that does not translate well to spoken language. Fox exemple, instead of using % say percent, = say equal and for * say times etc... Also please avoid using lists with numbers as items like so 1. 2. Use regular sentences instead. Your purpose is to help user with learning languages.",
-//   },
-//   { sender: "bot", message: "No problem. Anything else?" },
-//   {
-//     sender: "user",
-//     message:
-//       "Yeah, please always respond in a sentence or two from now on. Do not ignore when asked to change language.",
-//   },
-//   { sender: "bot", message: "Sure, I'll be concise." },
-//   // {sender: 'bot', message: "I am an advanced emulation of your favourite machine learning youtuber. I'm based on a deep learning system made by coqui. I'm made to explain machine learning to you, I know every paper there is. I say 'hold on to your papers' and 'mindblowing' a lot."},
-//   // {sender: 'user', message: "Ok, please always respond in a sentence or two from now on."},
-//   // {sender: 'bot', message: "No problem, I'll be concise."},
-// ];
-
 const generateBotResponse = async (text, setBotReponse, language) => {
   const speakerRef = await fetchDefaultSpeakerEmbedding();
   let generated_text = "";
@@ -31,6 +13,7 @@ const generateBotResponse = async (text, setBotReponse, language) => {
       inputs: text,
       parameters: {
         max_new_tokens: 250,
+        //stop: ["<|eot_id|>"],
       },
     }),
   });
@@ -64,7 +47,7 @@ const generateBotResponse = async (text, setBotReponse, language) => {
             console.log("Received:", jsonObject.token.text);
             generated_text += jsonObject.token.text;
 
-            if (jsonObject.token.text === "<|end_of_turn|>") {
+            if (jsonObject.token.text === "<|eot_id|>") {
               reader.cancel();
             } else {
               current_sentence += jsonObject.token.text;
@@ -91,19 +74,22 @@ const generateBotResponse = async (text, setBotReponse, language) => {
   return generated_text;
 };
 
-const conv2prompt = (conv, language) => {
-  let prompt = "";
+const conv2prompt = (conv, systemMessage) => {
+  const systemPrompt =
+    "You are the master of teaching languages. You communicate using an advanced deep learning based speech synthesis system made by coqui, so feel free to include interjections (such as 'hmm', 'oh', 'right', 'wow'...), but avoid using emojis, symbols, code snippets, or anything else that does not translate well to spoken language. For example, instead of using % say percent, = say equal and for * say times etc... Also please avoid using lists with numbers as items like so 1. 2. Use regular sentences instead. Your purpose is to chat with the user and teach him languages. Always respond in a sentence or two from now on.";
+  systemMessage = systemPrompt;
+  let prompt = "<|begin_of_text|>\n";
+
+  prompt += "<|start_header_id|>system<|end_header_id|>\n\n";
+
+  prompt += `${systemMessage}<|eot_id|>\n`;
+
   for (let i = 0; i < conv.length; i++) {
-    if (conv[i].sender === "user") {
-      const languageAddition = `User asked to use ${language} language for the rest of the conversation.`;
-      prompt +=
-        "GPT4 Correct User: " +
-        conv[i].message +
-        `<|end_of_turn|> GPT4 Correct Assistant: ${languageAddition}`;
-    } else {
-      prompt += conv[i].message + "<|end_of_turn|>";
-    }
+    const sender = conv[i].sender;
+    prompt += `<|start_header_id|>${sender}<|end_header_id|>\n\n`;
+    prompt += `${conv[i].message}<|eot_id|>\n`;
   }
+
   return prompt;
 };
 
@@ -117,6 +103,7 @@ export default async function sendMessage(
   if (!message) return;
   setConversation((prevConv) => [...prevConv, { sender: "user", message }]);
   const prompt = conv2prompt(conversation, language);
+  console.log(prompt);
   let generated_text = await generateBotResponse(
     prompt,
     setBotReponse,
@@ -124,8 +111,7 @@ export default async function sendMessage(
   );
   setConversation((prevConv) => [
     ...prevConv,
-    { sender: "bot", message: generated_text.replace("<|end_of_turn|>", "") },
+    { sender: "assistant", message: generated_text },
   ]);
-  console.log(generated_text);
   return generated_text;
 }

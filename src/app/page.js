@@ -23,9 +23,8 @@ export default function Home() {
     },
     { sender: "bot", message: "Sure, I'll be concise." },
   ];
-
-  const [conversation, setConversation] = useState(() => [...systemPrompt]);
-
+  //const [conversation, setConversation] = useState(() => [...systemPrompt]);
+  const [conversation, setConversation] = useState([]);
   useEffect(() => {
     console.log(conversation);
   }, [conversation]);

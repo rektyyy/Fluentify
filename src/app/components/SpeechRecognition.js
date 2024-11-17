@@ -21,6 +21,7 @@ export default function SpeechToText({ setConversation, conversation }) {
   const [botResponse, setBotResponse] = useState();
   const [language, setLanguage] = useState(["en-US", "en"]);
   const [input, setInput] = useState("");
+  const [changedLanguage, setChangedLanguage] = useState(false);
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn't support speech recognition.</span>;
@@ -31,6 +32,25 @@ export default function SpeechToText({ setConversation, conversation }) {
       handleSend(finalTranscript);
     }
   }, [finalTranscript]);
+
+  useEffect(() => {
+    if (changedLanguage) {
+      // Dodaj nową wiadomość do conversation
+      setConversation((prevConversation) => [
+        ...prevConversation,
+        {
+          sender: "user",
+          message: `Change the language to ${language[1]}.`,
+        },
+        {
+          sender: "bot",
+          message: `Sure.`,
+        },
+      ]);
+      // Ustaw changedLanguage na false
+      setChangedLanguage(false);
+    }
+  }, [changedLanguage]);
 
   const handleSend = async (message) => {
     if (!message) return;
@@ -64,9 +84,19 @@ export default function SpeechToText({ setConversation, conversation }) {
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSend(input);
+    }
+  };
+
   return (
     <div>
-      <SelectLanguage setLanguage={setLanguage} />
+      <SelectLanguage
+        setLanguage={setLanguage}
+        setChangedLanguage={setChangedLanguage}
+      />
       <div>Transcript: {transcript}</div>
       <div>Response: {botResponse}</div>
       <InputGroup className="mb-3 mt-auto p-4">
@@ -74,6 +104,7 @@ export default function SpeechToText({ setConversation, conversation }) {
           placeholder="Type your message..."
           value={transcript ? transcript : input}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         <Button
           variant={listening ? "danger" : "primary"}

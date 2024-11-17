@@ -14,13 +14,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - MODEL_ID=TheBloke/openchat_3.5-AWQ
+      - MODEL_ID=unsloth/Llama-3.2-1B-Instruct
       - PORT=8080
-      - QUANTIZE=awq
-      - MAX_INPUT_LEN=3696
-      - MAX_TOTAL_TOKENS=4096
-      - MAX_BATCH_PREFILL_TOKENS=4096
-      - CUDA_MEMORY_FRACTION=0.6
+      # - QUANTIZE=awq
+      # - MAX_INPUT_LEN=4096
+      # - MAX_TOTAL_TOKENS=4096
+      # - MAX_BATCH_PREFILL_TOKENS=4096
     deploy:
       resources:
         reservations:
