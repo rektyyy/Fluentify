@@ -1,0 +1,52 @@
+{
+  "name": "Lekcje",
+  "attributes": {
+    "id": "root"
+  },
+  "children": [
+    {
+      "name": "Lekcja 1",
+      "attributes": {
+        "id": "lesson1",
+        "description": "Opis lekcji 1"
+      }
+    },
+    {
+      "name": "Lekcja 2",
+      "attributes": {
+        "id": "lesson2",
+        "description": "Opis lekcji 2"
+      },
+      "children": [
+        {
+          "name": "Lekcja 2.1",
+          "attributes": {
+            "id": "lesson2.1",
+            "description": "Opis lekcji 2.1"
+          }
+        },
+        {
+          "name": "Lekcja 2.2",
+          "attributes": {
+            "id": "lesson2.2",
+            "description": "Opis lekcji 2.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lekcja 3",
+      "attributes": {
+        "id": "lesson3",
+        "description": "Opis lekcji 3"
+      }
+    },
+    {
+      "name": "dddd",
+      "attributes": {
+        "id": "dddd",
+        "description": "asdadsd"
+      }
+    }
+  ]
+}

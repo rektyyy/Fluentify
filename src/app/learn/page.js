@@ -5,52 +5,8 @@ import dynamic from "next/dynamic";
 
 const Tree = dynamic(() => import("react-d3-tree"), { ssr: false });
 
-const initialTreeData = {
-  name: "Lekcje",
-  attributes: { id: "root" },
-  children: [
-    {
-      name: "Lekcja 1",
-      attributes: {
-        id: "lesson1",
-        description: "Opis lekcji 1",
-      },
-    },
-    {
-      name: "Lekcja 2",
-      attributes: {
-        id: "lesson2",
-        description: "Opis lekcji 2",
-      },
-      children: [
-        {
-          name: "Lekcja 2.1",
-          attributes: {
-            id: "lesson2.1",
-            description: "Opis lekcji 2.1",
-          },
-        },
-        {
-          name: "Lekcja 2.2",
-          attributes: {
-            id: "lesson2.2",
-            description: "Opis lekcji 2.2",
-          },
-        },
-      ],
-    },
-    {
-      name: "Lekcja 3",
-      attributes: {
-        id: "lesson3",
-        description: "Opis lekcji 3",
-      },
-    },
-  ],
-};
-
 export default function Page() {
-  const [treeData, setTreeData] = useState(initialTreeData);
+  const [treeData, setTreeData] = useState(null);
   const [dimensions, setDimensions] = useState({
     width: 800,
     height: 600,
@@ -59,6 +15,13 @@ export default function Page() {
   const [lessonName, setLessonName] = useState("");
   const [lessonDescription, setLessonDescription] = useState("");
   const [selectedNode, setSelectedNode] = useState(null);
+
+  // Ładowanie danych drzewa z pliku JSON
+  useEffect(() => {
+    fetch("/api/getTreeData")
+      .then((response) => response.json())
+      .then((data) => setTreeData(data));
+  }, []);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -111,17 +74,22 @@ export default function Page() {
     };
 
     setTreeData((prevTreeData) => {
+      let newTreeData;
       if (selectedNode) {
-        const newTreeData = addChildToNode(prevTreeData);
-        return newTreeData;
+        newTreeData = addChildToNode(prevTreeData);
       } else {
-        return {
+        newTreeData = {
           ...prevTreeData,
           children: prevTreeData.children
             ? [...prevTreeData.children, newLesson]
             : [newLesson],
         };
       }
+
+      // Zapisz zaktualizowane drzewo do pliku JSON
+      saveTreeData(newTreeData);
+
+      return newTreeData;
     });
 
     setLessonName("");
@@ -133,6 +101,7 @@ export default function Page() {
   const onNodeClick = (nodeData) => {
     setSelectedNode(nodeData.data);
   };
+
   const renderCustomNode = ({ nodeDatum, toggleNode }) => (
     <g>
       <text fill="black" x="0" y="-20" textAnchor="middle">
@@ -142,6 +111,20 @@ export default function Page() {
       <circle r={15} fill="lightblue" onClick={toggleNode} />
     </g>
   );
+
+  // Funkcja do zapisywania danych drzewa
+  const saveTreeData = (data) => {
+    fetch("/api/saveTreeData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  };
+
+  if (!treeData) return <div>Loading...</div>;
+
   return (
     <div className="w-full h-screen flex flex-col">
       <h1 className="text-2xl font-bold mb-4">Lekcje</h1>
