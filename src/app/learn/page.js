@@ -76,6 +76,7 @@ export default function Page() {
     setTreeData((prevTreeData) => {
       let newTreeData;
       if (selectedNode) {
+        console.log("selectedNode", selectedNode);
         newTreeData = addChildToNode(prevTreeData);
       } else {
         newTreeData = {
@@ -99,19 +100,23 @@ export default function Page() {
   };
 
   const onNodeClick = (nodeData) => {
+    console.log("nodeData", nodeData);
     setSelectedNode(nodeData.data);
   };
 
-  const renderCustomNode = ({ nodeDatum, toggleNode }) => (
-    <g>
+  const renderCustomNode = ({ nodeDatum, toggleNode, onNodeClick }) => (
+    <g
+      onClick={() => {
+        toggleNode();
+        onNodeClick({ data: nodeDatum });
+      }}
+    >
       <text fill="black" x="0" y="-20" textAnchor="middle">
         {nodeDatum.name}
       </text>
-      {/* Rysuj wierzchołek */}
-      <circle r={15} fill="lightblue" onClick={toggleNode} />
+      <circle r={15} fill="lightblue" />
     </g>
   );
-
   // Funkcja do zapisywania danych drzewa
   const saveTreeData = (data) => {
     fetch("/api/saveTreeData", {
@@ -178,7 +183,9 @@ export default function Page() {
           zoomable={true}
           scaleExtent={{ min: 0.1, max: 2 }}
           separation={{ siblings: 0.5 }}
-          renderCustomNodeElement={renderCustomNode}
+          renderCustomNodeElement={(rd3tProps) =>
+            renderCustomNode({ ...rd3tProps, onNodeClick })
+          }
         />
       </div>
     </div>
