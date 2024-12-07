@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
+import Lesson from "../components/Lesson";
+
 const Tree = dynamic(() => import("react-d3-tree"), { ssr: false });
 
 export default function Page() {
@@ -17,7 +19,8 @@ export default function Page() {
   const [selectedNode, setSelectedNode] = useState(null);
   const [englishWord, setEnglishWord] = useState("");
   const [otherLanguageWord, setOtherLanguageWord] = useState("");
-  const [finalWords, setFinalWords] = useState([]);
+  const [displayLesson, setDisplayLesson] = useState(false);
+
   // Ładowanie danych drzewa z pliku JSON
   useEffect(() => {
     fetch("/api/getTreeData")
@@ -150,6 +153,10 @@ export default function Page() {
     });
   };
 
+  const handleViewLesson = () => {
+    setDisplayLesson(!displayLesson);
+  };
+
   if (!treeData) return <div>Loading...</div>;
 
   return (
@@ -163,7 +170,16 @@ export default function Page() {
       </button>
 
       {selectedNode && (
-        <p className="mt-2">Wybrany wierzchołek: {selectedNode.name}</p>
+        <div>
+          <p className="mt-2">Selected node: {selectedNode.name}</p>
+          <p>Description: {selectedNode.attributes.description}</p>
+          <button
+            onClick={handleViewLesson}
+            className="px-4 py-2 bg-green-500 text-white rounded"
+          >
+            Let's learn!
+          </button>
+        </div>
       )}
 
       {showForm && (
@@ -213,6 +229,10 @@ export default function Page() {
             Dodaj
           </button>
         </form>
+      )}
+
+      {displayLesson && (
+        <Lesson lessonData={selectedNode} onBack={handleViewLesson} />
       )}
 
       <div style={{ height: "100vh" }}>
