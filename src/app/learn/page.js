@@ -15,7 +15,9 @@ export default function Page() {
   const [lessonName, setLessonName] = useState("");
   const [lessonDescription, setLessonDescription] = useState("");
   const [selectedNode, setSelectedNode] = useState(null);
-
+  const [englishWord, setEnglishWord] = useState("");
+  const [otherLanguageWord, setOtherLanguageWord] = useState("");
+  const [finalWords, setFinalWords] = useState([]);
   // Ładowanie danych drzewa z pliku JSON
   useEffect(() => {
     fetch("/api/getTreeData")
@@ -42,11 +44,29 @@ export default function Page() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const engilshWords = englishWord.split(",");
+    const otherLanguageWords = otherLanguageWord.split(",");
+
+    if (engilshWords.length !== otherLanguageWords.length) {
+      alert(
+        "Give the same number of English and other language words separated by commas"
+      );
+      return;
+    }
+
+    const words = engilshWords.map((word, index) => {
+      return {
+        en: word,
+        other: otherLanguageWords[index],
+      };
+    });
+
     const newLesson = {
       name: lessonName,
       attributes: {
         id: lessonName.toLowerCase().replace(/ /g, ""),
         description: lessonDescription,
+        words: words,
       },
     };
 
@@ -97,6 +117,8 @@ export default function Page() {
     setLessonDescription("");
     setShowForm(false);
     setSelectedNode(null);
+    setEnglishWord("");
+    setOtherLanguageWord("");
   };
 
   const onNodeClick = (nodeData) => {
@@ -163,6 +185,26 @@ export default function Page() {
               onChange={(e) => setLessonDescription(e.target.value)}
               className="border p-2 w-full"
             />
+            <label className="block mb-2">
+              English Word:
+              <input
+                type="text"
+                value={englishWord}
+                onChange={(e) => setEnglishWord(e.target.value)}
+                className="border p-2 w-full"
+                required
+              />
+            </label>
+            <label className="block mb-2">
+              Other language word:
+              <input
+                type="text"
+                value={otherLanguageWord}
+                onChange={(e) => setOtherLanguageWord(e.target.value)}
+                className="border p-2 w-full"
+                required
+              />
+            </label>
           </label>
           <button
             type="submit"
