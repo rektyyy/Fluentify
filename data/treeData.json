@@ -8,72 +8,114 @@
       "name": "Lekcja 1",
       "attributes": {
         "id": "lesson1",
-        "description": "Opis lekcji 1"
+        "description": "Opis lekcji 1",
+        "words": [
+          { "pl": "radio", "en": "radio" },
+          { "pl": "taxi", "en": "taxi" },
+          { "pl": "hotel", "en": "hotel" },
+          { "pl": "computer", "en": "computer" },
+          { "pl": "internet", "en": "internet" },
+          { "pl": "problem", "en": "problem" },
+          { "pl": "film", "en": "film" },
+          { "pl": "menu", "en": "menu" },
+          { "pl": "video", "en": "video" },
+          { "pl": "sport", "en": "sport" }
+        ]
       }
     },
     {
       "name": "Lekcja 2",
       "attributes": {
         "id": "lesson2",
-        "description": "Opis lekcji 2"
-      },
-      "children": [
-        {
-          "name": "Lekcja 2.1",
-          "attributes": {
-            "id": "lesson2.1",
-            "description": "Opis lekcji 2.1"
-          }
-        },
-        {
-          "name": "Lekcja 2.2",
-          "attributes": {
-            "id": "lesson2.2",
-            "description": "Opis lekcji 2.2"
-          }
-        }
-      ]
+        "description": "Opis lekcji 2",
+        "words": [
+          { "pl": "idea", "en": "idea" },
+          { "pl": "plan", "en": "plan" },
+          { "pl": "test", "en": "test" },
+          { "pl": "start", "en": "start" },
+          { "pl": "stop", "en": "stop" },
+          { "pl": "laser", "en": "laser" },
+          { "pl": "alarm", "en": "alarm" },
+          { "pl": "gas", "en": "gas" },
+          { "pl": "bus", "en": "bus" },
+          { "pl": "club", "en": "club" }
+        ]
+      }
     },
     {
       "name": "Lekcja 3",
       "attributes": {
         "id": "lesson3",
-        "description": "Opis lekcji 3"
+        "description": "Opis lekcji 3",
+        "words": [
+          { "pl": "atom", "en": "atom" },
+          { "pl": "balon", "en": "balloon" },
+          { "pl": "golf", "en": "golf" },
+          { "pl": "bank", "en": "bank" },
+          { "pl": "lamp", "en": "lamp" },
+          { "pl": "mapa", "en": "map" },
+          { "pl": "metro", "en": "metro" },
+          { "pl": "motor", "en": "motor" },
+          { "pl": "piano", "en": "piano" },
+          { "pl": "tango", "en": "tango" }
+        ]
       }
     },
     {
-      "name": "dddd",
+      "name": "Lekcja 4",
       "attributes": {
-        "id": "dddd",
-        "description": "asdadsd"
+        "id": "lesson4",
+        "description": "Opis lekcji 4",
+        "words": [
+          { "pl": "aktor", "en": "actor" },
+          { "pl": "doktor", "en": "doctor" },
+          { "pl": "profesor", "en": "professor" },
+          { "pl": "pilot", "en": "pilot" },
+          { "pl": "radio", "en": "radio" },
+          { "pl": "robot", "en": "robot" },
+          { "pl": "satelita", "en": "satellite" },
+          { "pl": "telefon", "en": "telephone" },
+          { "pl": "tramwaj", "en": "tram" },
+          { "pl": "uniwersytet", "en": "university" }
+        ]
       }
     },
     {
-      "name": "sadas",
+      "name": "Lekcja 5",
       "attributes": {
-        "id": "sadas",
-        "description": "sadsad"
+        "id": "lesson5",
+        "description": "Opis lekcji 5",
+        "words": [
+          { "pl": "komfort", "en": "comfort" },
+          { "pl": "kontrol", "en": "control" },
+          { "pl": "kultura", "en": "culture" },
+          { "pl": "moment", "en": "moment" },
+          { "pl": "nastrój", "en": "mood" },
+          { "pl": "opera", "en": "opera" },
+          { "pl": "problem", "en": "problem" },
+          { "pl": "program", "en": "program" },
+          { "pl": "progres", "en": "progress" },
+          { "pl": "projekt", "en": "project" }
+        ]
       }
     },
     {
-      "name": "adasd",
+      "name": "Lekcja 6",
       "attributes": {
-        "id": "adasd",
-        "description": "asdasd"
-      }
-    },
-    {
-      "name": "asd",
-      "attributes": {
-        "id": "asd",
-        "description": "sdadsa"
-      }
-    },
-    {
-      "name": "sad",
-      "attributes": {
-        "id": "sad",
-        "description": "asd"
+        "id": "lesson6",
+        "description": "Opis lekcji 6",
+        "words": [
+          { "pl": "risk", "en": "risk" },
+          { "pl": "system", "en": "system" },
+          { "pl": "studio", "en": "studio" },
+          { "pl": "traktor", "en": "tractor" },
+          { "pl": "organizm", "en": "organism" },
+          { "pl": "minimum", "en": "minimum" },
+          { "pl": "maximum", "en": "maximum" },
+          { "pl": "virus", "en": "virus" },
+          { "pl": "anulować", "en": "annul" },
+          { "pl": "klub", "en": "club" }
+        ]
       }
     }
   ]

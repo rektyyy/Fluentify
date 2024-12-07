@@ -36,7 +36,7 @@ export default function Page() {
   }, []);
 
   const handleAddLesson = () => {
-    setShowForm(true);
+    setShowForm(!showForm);
   };
 
   const handleSubmit = (e) => {
@@ -180,7 +180,7 @@ export default function Page() {
           orientation="vertical"
           onNodeClick={onNodeClick}
           collapsible={false}
-          zoomable={true}
+          zoomable={false}
           scaleExtent={{ min: 0.1, max: 2 }}
           separation={{ siblings: 0.5 }}
           renderCustomNodeElement={(rd3tProps) =>
