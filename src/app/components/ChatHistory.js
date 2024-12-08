@@ -7,13 +7,13 @@ export default function ChatHistory({ conversation }) {
   };
   return (
     <Container style={containerStyle}>
-      {conversation.slice(4).map((item, index) => (
+      {conversation.slice(1).map((item, index) => (
         <Row key={index} className="mb-3">
           <Col>
             <Card>
               <Card.Body>
                 <Card.Text>
-                  <strong>{item.sender}:</strong> {item.message}
+                  <strong>{item.role}:</strong> {item.content}
                 </Card.Text>
               </Card.Body>
             </Card>

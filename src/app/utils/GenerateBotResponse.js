@@ -1,64 +1,54 @@
 import { fetchDefaultSpeakerEmbedding, streamTTS } from "./Tts";
 
-const generateBotResponse = async (text, setBotReponse, language) => {
+async function generateBotResponse(messages, setBotResponse, language) {
+  console.log(messages);
   const speakerRef = await fetchDefaultSpeakerEmbedding();
-  let generated_text = "";
-  let current_sentence = "";
-  const response = await fetch("http://localhost:5000/generate_stream", {
+  const response = await fetch("http://localhost:11434/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      inputs: text,
-      parameters: {
-        max_new_tokens: 250,
-        //stop: ["<|eot_id|>"],
-      },
+      model: "llama3.1", // Replace with your model name
+      messages: messages, // Messages should be an array of message objects
+      stream: true, // Enable streaming
     }),
   });
 
-  if (!response.ok || !response.body) {
-    throw response.statusText;
+  if (!response.ok) {
+    console.error("Error fetching bot response:", response.statusText);
+    return;
   }
 
   const reader = response.body.getReader();
-  const decoder = new TextDecoder();
-  let partialData = "";
+  const decoder = new TextDecoder("utf-8");
+  let generated_text = "";
+  let current_sentence = "";
 
   while (true) {
     const { value, done } = await reader.read();
-    if (done) {
-      break;
-    }
+    if (done) break;
 
-    partialData += decoder.decode(value, { stream: true });
+    const chunk = decoder.decode(value);
+    const lines = chunk.split("\n");
 
-    // Process each line separately
-    let lines = partialData.split("\n");
-    for (let i = 0; i < lines.length - 1; i++) {
-      const line = lines[i];
-      if (line.startsWith("data:")) {
-        const jsonString = line.substring(5); // Remove 'data:' prefix
-
+    for (const line of lines) {
+      if (line.trim()) {
         try {
-          const jsonObject = JSON.parse(jsonString);
-          if (jsonObject && jsonObject.token && jsonObject.token.text) {
-            console.log("Received:", jsonObject.token.text);
-            generated_text += jsonObject.token.text;
+          const jsonObject = JSON.parse(line.trim());
 
-            if (jsonObject.token.text === "<|eot_id|>") {
-              reader.cancel();
-            } else {
-              current_sentence += jsonObject.token.text;
-            }
+          if (jsonObject.done) {
+            break;
+          }
 
-            if (
-              jsonObject.token.text === "." ||
-              jsonObject.token.text === "?" ||
-              jsonObject.token.text === "!"
-            ) {
-              setBotReponse(generated_text);
+          if (jsonObject.message && jsonObject.message.content) {
+            const token = jsonObject.message.content;
+
+            current_sentence += token;
+            generated_text += token;
+            setBotResponse(generated_text);
+
+            if (token === "." || token === "?" || token === "!") {
               await streamTTS(current_sentence, speakerRef, language);
               current_sentence = "";
             }
@@ -68,29 +58,10 @@ const generateBotResponse = async (text, setBotReponse, language) => {
         }
       }
     }
-
-    partialData = lines[lines.length - 1];
   }
+
   return generated_text;
-};
-
-const conv2prompt = (conv, language, systemMessage) => {
-  const systemPrompt = `You are a friendly and helpful language teaching assistant that communicates in ${language}. You help users learn new languages by engaging in conversation, correcting their mistakes, and providing explanations and examples in the target language. Try to avoid lists, code snippets, or anything that doesn't translate well to spoken language. Your goal is to help users learn new languages in a fun and engaging way.`;
-  systemMessage = systemPrompt;
-  let prompt = "<|begin_of_text|>\n";
-
-  prompt += "<|start_header_id|>system<|end_header_id|>\n\n";
-
-  prompt += `${systemMessage}<|eot_id|>\n`;
-
-  for (let i = 0; i < conv.length; i++) {
-    const sender = conv[i].sender;
-    prompt += `<|start_header_id|>${sender}<|end_header_id|>\n\n`;
-    prompt += `${conv[i].message}<|eot_id|>\n`;
-  }
-
-  return prompt;
-};
+}
 
 export default async function sendMessage(
   message,
@@ -100,17 +71,21 @@ export default async function sendMessage(
   language
 ) {
   if (!message) return;
-  setConversation((prevConv) => [...prevConv, { sender: "user", message }]);
-  const prompt = conv2prompt(conversation, language);
-  console.log(prompt);
+  setConversation((prevConv) => [
+    ...prevConv,
+    { role: "user", content: message },
+  ]);
+
   let generated_text = await generateBotResponse(
-    prompt,
+    [...conversation, { role: "user", content: message }],
     setBotReponse,
     language
   );
+
   setConversation((prevConv) => [
     ...prevConv,
-    { sender: "assistant", message: generated_text },
+    { role: "assistant", content: generated_text },
   ]);
+
   return generated_text;
 }

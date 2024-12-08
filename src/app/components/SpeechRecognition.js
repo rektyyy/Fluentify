@@ -35,19 +35,17 @@ export default function SpeechToText({ setConversation, conversation }) {
 
   useEffect(() => {
     if (changedLanguage) {
-      // Dodaj nową wiadomość do conversation
       setConversation((prevConversation) => [
         ...prevConversation,
         {
-          sender: "user",
-          message: `Change the language to ${language[1]}.`,
+          role: "user",
+          content: `Change the language to ${language[1]}.`,
         },
         {
-          sender: "bot",
-          message: `Sure.`,
+          role: "assistant",
+          content: `Sure.`,
         },
       ]);
-      // Ustaw changedLanguage na false
       setChangedLanguage(false);
     }
   }, [changedLanguage]);
@@ -64,8 +62,6 @@ export default function SpeechToText({ setConversation, conversation }) {
         language[1]
       );
       console.log(response);
-      // Optionally update bot response state
-      // setBotResponse(response);
     } catch (error) {
       console.error("Error sending message:", error);
     }
