@@ -129,6 +129,40 @@ export default function Page() {
     setSelectedNode(nodeData.data);
   };
 
+  const handleDeleteNode = () => {
+    const deleteNodeById = (node, id) => {
+      if (!node.children) return node;
+
+      node.children = node.children
+        .filter((child) => child.attributes.id !== id)
+        .map((child) => deleteNodeById(child, id));
+
+      return node;
+    };
+
+    if (!selectedNode) {
+      alert("Nie wybrano żadnej lekcji do usunięcia.");
+      return;
+    }
+
+    if (selectedNode.attributes.id === "root") {
+      alert("Nie można usunąć korzenia drzewa.");
+      return;
+    }
+
+    if (confirm(`Czy na pewno chcesz usunąć lekcję "${selectedNode.name}"?`)) {
+      const treeDataCopy = JSON.parse(JSON.stringify(treeData));
+      const updatedTreeData = deleteNodeById(
+        treeDataCopy,
+        selectedNode.attributes.id
+      );
+      setTreeData(updatedTreeData);
+      setSelectedNode(null);
+
+      saveTreeData(updatedTreeData);
+    }
+  };
+
   const renderCustomNode = ({ nodeDatum, toggleNode, onNodeClick }) => (
     <g
       onClick={() => {
@@ -168,7 +202,12 @@ export default function Page() {
       >
         Dodaj lekcję
       </button>
-
+      <button
+        onClick={handleDeleteNode}
+        className="px-4 py-2 bg-red-500 text-white rounded mt-2"
+      >
+        Usuń wybraną lekcję
+      </button>
       {selectedNode && (
         <div>
           <p className="mt-2">Selected node: {selectedNode.name}</p>
@@ -185,7 +224,7 @@ export default function Page() {
       {showForm && (
         <form onSubmit={handleSubmit} className="mt-4">
           <label className="block mb-2">
-            Nazwa lekcji:
+            Lesson name:
             <input
               type="text"
               value={lessonName}
@@ -195,7 +234,7 @@ export default function Page() {
             />
           </label>
           <label className="block mb-2">
-            Opis lekcji:
+            Lesson description:
             <textarea
               value={lessonDescription}
               onChange={(e) => setLessonDescription(e.target.value)}

@@ -297,60 +297,6 @@
           }
         ]
       }
-    },
-    {
-      "name": "test",
-      "attributes": {
-        "id": "test",
-        "description": "test",
-        "words": [
-          {
-            "en": "a",
-            "other": "a"
-          },
-          {
-            "en": "b",
-            "other": "b"
-          },
-          {
-            "en": "c",
-            "other": "c"
-          },
-          {
-            "en": "d",
-            "other": "d"
-          }
-        ]
-      }
-    },
-    {
-      "name": "test2",
-      "attributes": {
-        "id": "test2",
-        "description": "test2",
-        "words": [
-          {
-            "en": "a",
-            "other": "a"
-          },
-          {
-            "en": "b",
-            "other": "b"
-          },
-          {
-            "en": "c",
-            "other": "c"
-          },
-          {
-            "en": "d",
-            "other": "d"
-          },
-          {
-            "en": "e",
-            "other": "e"
-          }
-        ]
-      }
     }
   ]
 }
