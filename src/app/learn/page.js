@@ -20,8 +20,8 @@ export default function Page() {
   const [englishWord, setEnglishWord] = useState("");
   const [otherLanguageWord, setOtherLanguageWord] = useState("");
   const [displayLesson, setDisplayLesson] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
-  // Ładowanie danych drzewa z pliku JSON
   useEffect(() => {
     fetch("/api/getTreeData")
       .then((response) => response.json())
@@ -47,81 +47,75 @@ export default function Page() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const engilshWords = englishWord.split(",");
-    const otherLanguageWords = otherLanguageWord.split(",");
+    const treeDataCopy = JSON.parse(JSON.stringify(treeData));
 
-    if (engilshWords.length !== otherLanguageWords.length) {
-      alert(
-        "Give the same number of English and other language words separated by commas"
+    if (isEditing) {
+      // Modyfikacja istniejącej lekcji
+      const updatedLesson = {
+        ...selectedNode,
+        name: lessonName,
+        attributes: {
+          ...selectedNode.attributes,
+          description: lessonDescription,
+          words: [
+            { en: englishWord, other: otherLanguageWord },
+            // Możesz dodać więcej słów według potrzeb
+          ],
+        },
+      };
+
+      const updateNodeById = (node, id, updatedNode) => {
+        if (node.attributes.id === id) {
+          return updatedNode;
+        }
+
+        if (node.children) {
+          node.children = node.children.map((child) =>
+            updateNodeById(child, id, updatedNode)
+          );
+        }
+
+        return node;
+      };
+
+      const updatedTreeData = updateNodeById(
+        treeDataCopy,
+        selectedNode.attributes.id,
+        updatedLesson
       );
-      return;
+
+      setTreeData(updatedTreeData);
+      setSelectedNode(updatedLesson);
+    } else {
+      // Dodawanie nowej lekcji
+      const newLesson = {
+        name: lessonName,
+        attributes: {
+          id: `lesson${treeDataCopy.children.length + 1}`,
+          description: lessonDescription,
+          words: [
+            { en: englishWord, other: otherLanguageWord },
+            // Dodaj więcej słów, jeśli potrzebujesz
+          ],
+        },
+      };
+
+      const updatedTreeData = {
+        ...treeDataCopy,
+        children: [...treeDataCopy.children, newLesson],
+      };
+
+      setTreeData(updatedTreeData);
     }
 
-    const words = engilshWords.map((word, index) => {
-      return {
-        en: word,
-        other: otherLanguageWords[index],
-      };
-    });
-
-    const newLesson = {
-      name: lessonName,
-      attributes: {
-        id: lessonName.toLowerCase().replace(/ /g, ""),
-        description: lessonDescription,
-        words: words,
-      },
-    };
-
-    const addChildToNode = (node) => {
-      if (!node.attributes) node.attributes = {};
-      const nodeId = node.attributes.id;
-      const selectedNodeId =
-        selectedNode && selectedNode.attributes
-          ? selectedNode.attributes.id
-          : null;
-
-      if (nodeId === selectedNodeId) {
-        return {
-          ...node,
-          children: node.children ? [...node.children, newLesson] : [newLesson],
-        };
-      } else if (node.children) {
-        return {
-          ...node,
-          children: node.children.map(addChildToNode),
-        };
-      } else {
-        return node;
-      }
-    };
-
-    setTreeData((prevTreeData) => {
-      let newTreeData;
-      if (selectedNode) {
-        console.log("selectedNode", selectedNode);
-        newTreeData = addChildToNode(prevTreeData);
-      } else {
-        newTreeData = {
-          ...prevTreeData,
-          children: prevTreeData.children
-            ? [...prevTreeData.children, newLesson]
-            : [newLesson],
-        };
-      }
-
-      // Zapisz zaktualizowane drzewo do pliku JSON
-      saveTreeData(newTreeData);
-
-      return newTreeData;
-    });
-
+    setShowForm(false);
+    setIsEditing(false);
     setLessonName("");
     setLessonDescription("");
-    setShowForm(false);
-    setSelectedNode(null);
     setEnglishWord("");
     setOtherLanguageWord("");
+
+    saveTreeData(treeDataCopy);
   };
 
   const onNodeClick = (nodeData) => {
@@ -163,6 +157,32 @@ export default function Page() {
     }
   };
 
+  const handleModifyLesson = () => {
+    if (!selectedNode) {
+      alert("Nie wybrano żadnej lekcji do modyfikacji.");
+      return;
+    }
+
+    setLessonName(selectedNode.name);
+    setLessonDescription(selectedNode.attributes.description || "");
+    if (
+      selectedNode.attributes.words &&
+      selectedNode.attributes.words.length > 0
+    ) {
+      setEnglishWord(
+        selectedNode.attributes.words.map((word) => word.en).join(",") || ""
+      );
+      setOtherLanguageWord(
+        selectedNode.attributes.words.map((word) => word.other).join(",") || ""
+      );
+    } else {
+      setEnglishWord("");
+      setOtherLanguageWord("");
+    }
+    setIsEditing(true);
+    setShowForm(true);
+  };
+
   const renderCustomNode = ({ nodeDatum, toggleNode, onNodeClick }) => (
     <g
       onClick={() => {
@@ -176,7 +196,7 @@ export default function Page() {
       <circle r={15} fill="lightblue" />
     </g>
   );
-  // Funkcja do zapisywania danych drzewa
+
   const saveTreeData = (data) => {
     fetch("/api/saveTreeData", {
       method: "POST",
@@ -200,13 +220,19 @@ export default function Page() {
         onClick={handleAddLesson}
         className="px-4 py-2 bg-blue-500 text-white rounded"
       >
-        Dodaj lekcję
+        Add lesson
       </button>
       <button
         onClick={handleDeleteNode}
         className="px-4 py-2 bg-red-500 text-white rounded mt-2"
       >
-        Usuń wybraną lekcję
+        Delete lesson
+      </button>
+      <button
+        onClick={handleModifyLesson}
+        className="px-4 py-2 bg-yellow-500 text-white rounded mt-2"
+      >
+        Modify lesson
       </button>
       {selectedNode && (
         <div>
@@ -263,9 +289,23 @@ export default function Page() {
           </label>
           <button
             type="submit"
-            className="px-4 py-2 bg-green-500 text-white rounded"
+            className="px-4 py-2 bg-green-500 text-white rounded mt-2"
           >
-            Dodaj
+            {isEditing ? "Save changes" : "Add lesson"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setShowForm(false);
+              setIsEditing(false);
+              setLessonName("");
+              setLessonDescription("");
+              setEnglishWord("");
+              setOtherLanguageWord("");
+            }}
+            className="px-4 py-2 bg-gray-500 text-white rounded mt-2 ml-2"
+          >
+            Anuluj zmiany
           </button>
         </form>
       )}

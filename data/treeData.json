@@ -253,49 +253,18 @@
       "name": "Lekcja 6",
       "attributes": {
         "id": "lesson6",
-        "description": "Opis lekcji 6",
+        "description": "Opis lekcji 5",
         "words": [
           {
-            "other": "risk",
-            "en": "risk"
-          },
-          {
-            "other": "system",
-            "en": "system"
-          },
-          {
-            "other": "studio",
-            "en": "studio"
-          },
-          {
-            "other": "traktor",
-            "en": "tractor"
-          },
-          {
-            "other": "organizm",
-            "en": "organism"
-          },
-          {
-            "other": "minimum",
-            "en": "minimum"
-          },
-          {
-            "other": "maximum",
-            "en": "maximum"
-          },
-          {
-            "other": "virus",
-            "en": "virus"
-          },
-          {
-            "other": "anulować",
-            "en": "annul"
-          },
-          {
-            "other": "klub",
-            "en": "club"
+            "en": "comfort,control,culture,moment,mood,opera,problem,program,progress,project",
+            "other": "komfort,kontrol,kultura,moment,nastrój,opera,problem,program,progres,projekt"
           }
         ]
+      },
+      "__rd3t": {
+        "id": "78fbca1c-e16b-4423-a564-44a65c3c009a",
+        "depth": 1,
+        "collapsed": false
       }
     }
   ]
