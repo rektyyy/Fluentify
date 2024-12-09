@@ -207,62 +207,53 @@
         "description": "Opis lekcji 5",
         "words": [
           {
-            "other": "komfort",
-            "en": "comfort"
+            "en": "comfort",
+            "other": "komfort"
           },
           {
-            "other": "kontrol",
-            "en": "control"
+            "en": "control",
+            "other": "kontrol"
           },
           {
-            "other": "kultura",
-            "en": "culture"
+            "en": "culture",
+            "other": "kultura"
           },
           {
-            "other": "moment",
-            "en": "moment"
+            "en": "moment",
+            "other": "moment"
           },
           {
-            "other": "nastrój",
-            "en": "mood"
+            "en": "mood",
+            "other": "nastrój"
           },
           {
-            "other": "opera",
-            "en": "opera"
+            "en": "opera",
+            "other": "opera"
           },
           {
-            "other": "problem",
-            "en": "problem"
+            "en": "problem",
+            "other": "problem"
           },
           {
-            "other": "program",
-            "en": "program"
+            "en": "program",
+            "other": "program"
           },
           {
-            "other": "progres",
-            "en": "progress"
+            "en": "progress",
+            "other": "progres"
           },
           {
-            "other": "projekt",
-            "en": "project"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Lekcja 6",
-      "attributes": {
-        "id": "lesson6",
-        "description": "Opis lekcji 5",
-        "words": [
+            "en": "project",
+            "other": "projekt"
+          },
           {
-            "en": "comfort,control,culture,moment,mood,opera,problem,program,progress,project",
-            "other": "komfort,kontrol,kultura,moment,nastrój,opera,problem,program,progres,projekt"
+            "en": "bomba",
+            "other": "bomba"
           }
         ]
       },
       "__rd3t": {
-        "id": "78fbca1c-e16b-4423-a564-44a65c3c009a",
+        "id": "3396ff77-dcf0-4b99-9545-45526e4543fd",
         "depth": 1,
         "collapsed": false
       }

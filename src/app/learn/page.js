@@ -49,18 +49,27 @@ export default function Page() {
 
     const treeDataCopy = JSON.parse(JSON.stringify(treeData));
 
+    const englishWordArray = englishWord.split(",");
+    const otherLanguageWordArray = otherLanguageWord.split(",");
+
+    if (englishWordArray.length !== otherLanguageWordArray.length) {
+      alert("Amount of English words must be equal to other language words.");
+      return;
+    }
+
     if (isEditing) {
       // Modyfikacja istniejącej lekcji
+
       const updatedLesson = {
         ...selectedNode,
         name: lessonName,
         attributes: {
           ...selectedNode.attributes,
           description: lessonDescription,
-          words: [
-            { en: englishWord, other: otherLanguageWord },
-            // Możesz dodać więcej słów według potrzeb
-          ],
+          words: englishWordArray.map((word, index) => ({
+            en: word,
+            other: otherLanguageWordArray[index],
+          })),
         },
       };
 
@@ -87,16 +96,16 @@ export default function Page() {
       setTreeData(updatedTreeData);
       setSelectedNode(updatedLesson);
     } else {
-      // Dodawanie nowej lekcji
+      // Dodanie nowej lekcji
       const newLesson = {
         name: lessonName,
         attributes: {
           id: `lesson${treeDataCopy.children.length + 1}`,
           description: lessonDescription,
-          words: [
-            { en: englishWord, other: otherLanguageWord },
-            // Dodaj więcej słów, jeśli potrzebujesz
-          ],
+          words: englishWordArray.map((word, index) => ({
+            en: word,
+            other: otherLanguageWordArray[index],
+          })),
         },
       };
 
@@ -181,6 +190,15 @@ export default function Page() {
     }
     setIsEditing(true);
     setShowForm(true);
+  };
+
+  const handleCancelChanges = () => {
+    setShowForm(false);
+    setIsEditing(false);
+    setLessonName("");
+    setLessonDescription("");
+    setEnglishWord("");
+    setOtherLanguageWord("");
   };
 
   const renderCustomNode = ({ nodeDatum, toggleNode, onNodeClick }) => (
@@ -295,17 +313,10 @@ export default function Page() {
           </button>
           <button
             type="button"
-            onClick={() => {
-              setShowForm(false);
-              setIsEditing(false);
-              setLessonName("");
-              setLessonDescription("");
-              setEnglishWord("");
-              setOtherLanguageWord("");
-            }}
+            onClick={handleCancelChanges}
             className="px-4 py-2 bg-gray-500 text-white rounded mt-2 ml-2"
           >
-            Anuluj zmiany
+            Cancel changes
           </button>
         </form>
       )}
