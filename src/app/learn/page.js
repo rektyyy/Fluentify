@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 import Lesson from "../components/Lesson";
-
+import LessonTree from "../components/LessonTree";
+import LessonActions from "../components/LessonActions";
 const Tree = dynamic(() => import("react-d3-tree"), { ssr: false });
 
 export default function Page() {
@@ -127,7 +128,7 @@ export default function Page() {
     saveTreeData(treeDataCopy);
   };
 
-  const onNodeClick = (nodeData) => {
+  const handleNodeClick = (nodeData) => {
     console.log("nodeData", nodeData);
     setSelectedNode(nodeData.data);
   };
@@ -201,11 +202,11 @@ export default function Page() {
     setOtherLanguageWord("");
   };
 
-  const renderCustomNode = ({ nodeDatum, toggleNode, onNodeClick }) => (
+  const renderCustomNode = ({ nodeDatum, toggleNode, handleNodeClick }) => (
     <g
       onClick={() => {
         toggleNode();
-        onNodeClick({ data: nodeDatum });
+        handleNodeClick({ data: nodeDatum });
       }}
     >
       <text fill="black" x="0" y="-20" textAnchor="middle">
@@ -234,24 +235,11 @@ export default function Page() {
   return (
     <div className="w-full h-screen flex flex-col">
       <h1 className="text-2xl font-bold mb-4">Lekcje</h1>
-      <button
-        onClick={handleAddLesson}
-        className="px-4 py-2 bg-blue-500 text-white rounded"
-      >
-        Add lesson
-      </button>
-      <button
-        onClick={handleDeleteNode}
-        className="px-4 py-2 bg-red-500 text-white rounded mt-2"
-      >
-        Delete lesson
-      </button>
-      <button
-        onClick={handleModifyLesson}
-        className="px-4 py-2 bg-yellow-500 text-white rounded mt-2"
-      >
-        Modify lesson
-      </button>
+      <LessonActions
+        setShowForm={setShowForm}
+        handleDeleteNode={handleDeleteNode}
+        handleModifyLesson={handleModifyLesson}
+      />
       {selectedNode && (
         <div>
           <p className="mt-2">Selected node: {selectedNode.name}</p>
@@ -264,7 +252,6 @@ export default function Page() {
           </button>
         </div>
       )}
-
       {showForm && (
         <form onSubmit={handleSubmit} className="mt-4">
           <label className="block mb-2">
@@ -320,26 +307,15 @@ export default function Page() {
           </button>
         </form>
       )}
-
       {displayLesson && (
         <Lesson lessonData={selectedNode} onBack={handleViewLesson} />
       )}
-
-      <div style={{ height: "100vh" }}>
-        <Tree
-          data={treeData}
-          translate={{ x: dimensions.width / 2, y: dimensions.height / 4 }}
-          orientation="vertical"
-          onNodeClick={onNodeClick}
-          collapsible={false}
-          zoomable={false}
-          scaleExtent={{ min: 0.1, max: 2 }}
-          separation={{ siblings: 0.5 }}
-          renderCustomNodeElement={(rd3tProps) =>
-            renderCustomNode({ ...rd3tProps, onNodeClick })
-          }
-        />
-      </div>
+      <LessonTree
+        treeData={treeData}
+        dimensions={dimensions}
+        handleNodeClick={handleNodeClick}
+        renderCustomNode={renderCustomNode}
+      />
     </div>
   );
 }

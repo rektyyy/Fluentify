@@ -158,46 +158,51 @@
         "description": "Opis lekcji 4",
         "words": [
           {
-            "other": "aktor",
-            "en": "actor"
+            "en": "actor",
+            "other": "aktor"
           },
           {
-            "other": "doktor",
-            "en": "doctor"
+            "en": "doctor",
+            "other": "doktor"
           },
           {
-            "other": "profesor",
-            "en": "professor"
+            "en": "professor",
+            "other": "profesor"
           },
           {
-            "other": "pilot",
-            "en": "pilot"
+            "en": "pilot",
+            "other": "pilot"
           },
           {
-            "other": "radio",
-            "en": "radio"
+            "en": "radio",
+            "other": "radio"
           },
           {
-            "other": "robot",
-            "en": "robot"
+            "en": "robot",
+            "other": "robot"
           },
           {
-            "other": "satelita",
-            "en": "satellite"
+            "en": "satellite",
+            "other": "satelita"
           },
           {
-            "other": "telefon",
-            "en": "telephone"
+            "en": "telephone",
+            "other": "telefon"
           },
           {
-            "other": "tramwaj",
-            "en": "tram"
+            "en": "tram",
+            "other": "tramwaj"
           },
           {
-            "other": "uniwersytet",
-            "en": "university"
+            "en": "university",
+            "other": "uniwersytet"
           }
         ]
+      },
+      "__rd3t": {
+        "id": "927d3fbd-62d0-40d4-ae37-2e766223908d",
+        "depth": 1,
+        "collapsed": false
       }
     },
     {
@@ -253,7 +258,7 @@
         ]
       },
       "__rd3t": {
-        "id": "3396ff77-dcf0-4b99-9545-45526e4543fd",
+        "id": "cf54c65d-b606-4ea5-a91e-6c09fb6e76a6",
         "depth": 1,
         "collapsed": false
       }
