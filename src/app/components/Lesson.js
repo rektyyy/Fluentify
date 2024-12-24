@@ -53,7 +53,7 @@ const Lesson = ({ lessonData }) => {
                   type="text"
                   value={userInputs[index] || ""}
                   onChange={(e) => handleChange(e, index)}
-                  placeholder="Wpisz brakujące słowo"
+                  placeholder="Fill the missing word"
                   className={
                     answersFeedback[index] === false
                       ? "border border-red-500"
@@ -91,10 +91,10 @@ const Lesson = ({ lessonData }) => {
         onClick={checkAnswers}
         className="px-4 py-2 bg-green-500 text-white rounded"
       >
-        Sprawdź odpowiedzi
+        Check your answers
       </button>
       {isAllCorrect === true && (
-        <p className="text-green-500">Wszystkie odpowiedzi są poprawne!</p>
+        <p className="text-green-500">All answers are correct!</p>
       )}
     </div>
   );

@@ -1,12 +1,13 @@
 const LessonActions = ({
-  setShowForm,
+  setIsEditing,
+  handleAddLesson,
   handleDeleteNode,
   handleModifyLesson,
 }) => (
   <div>
     <button
       onClick={() => {
-        setShowForm(true);
+        handleAddLesson();
         setIsEditing(false);
       }}
       className="px-4 py-2 bg-blue-500 text-white rounded"

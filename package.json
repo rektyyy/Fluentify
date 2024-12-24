@@ -11,7 +11,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "bootstrap": "^5.3.3",
-    "next": "14.2.14",
+    "next": "^14.2.21",
     "react": "^18",
     "react-bootstrap": "^2.10.5",
     "react-d3-tree": "^3.6.2",

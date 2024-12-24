@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 
 import Lesson from "../components/Lesson";
 import LessonTree from "../components/LessonTree";
 import LessonActions from "../components/LessonActions";
-const Tree = dynamic(() => import("react-d3-tree"), { ssr: false });
 
 export default function Page() {
   const [treeData, setTreeData] = useState(null);
@@ -145,16 +143,16 @@ export default function Page() {
     };
 
     if (!selectedNode) {
-      alert("Nie wybrano żadnej lekcji do usunięcia.");
+      alert("Didn't select any lesson to delete!");
       return;
     }
 
     if (selectedNode.attributes.id === "root") {
-      alert("Nie można usunąć korzenia drzewa.");
+      alert("You cannot delete the root");
       return;
     }
 
-    if (confirm(`Czy na pewno chcesz usunąć lekcję "${selectedNode.name}"?`)) {
+    if (confirm(`Are you sure you want to delete this lesson: "${selectedNode.name}"?`)) {
       const treeDataCopy = JSON.parse(JSON.stringify(treeData));
       const updatedTreeData = deleteNodeById(
         treeDataCopy,
@@ -169,7 +167,7 @@ export default function Page() {
 
   const handleModifyLesson = () => {
     if (!selectedNode) {
-      alert("Nie wybrano żadnej lekcji do modyfikacji.");
+      alert("Didn't select any lesson to modify!");
       return;
     }
 
@@ -234,9 +232,10 @@ export default function Page() {
 
   return (
     <div className="w-full h-screen flex flex-col">
-      <h1 className="text-2xl font-bold mb-4">Lekcje</h1>
+      <h1 className="text-2xl font-bold mb-4">Lessons</h1>
       <LessonActions
-        setShowForm={setShowForm}
+        setIsEditing={setIsEditing}
+        handleAddLesson={handleAddLesson}
         handleDeleteNode={handleDeleteNode}
         handleModifyLesson={handleModifyLesson}
       />
