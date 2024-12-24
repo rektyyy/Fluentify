@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 
-import Lesson from "../components/Lesson";
+import LessonType1 from "../components/LessonType1";
+import LessonType2 from "../components/LessonType2";
 import LessonTree from "../components/LessonTree";
 import LessonActions from "../components/LessonActions";
 import LessonForm from "../components/LessonForm";
@@ -94,9 +95,9 @@ export default function Page() {
         selectedNode.attributes.id,
         updatedLesson
       );
-
       setTreeData(updatedTreeData);
       setSelectedNode(updatedLesson);
+      saveTreeData(updatedTreeData);
     } else {
       // Dodanie nowej lekcji
       const newLesson = {
@@ -116,8 +117,8 @@ export default function Page() {
         ...treeDataCopy,
         children: [...treeDataCopy.children, newLesson],
       };
-
       setTreeData(updatedTreeData);
+      saveTreeData(updatedTreeData);
     }
 
     setShowForm(false);
@@ -126,8 +127,6 @@ export default function Page() {
     setLessonDescription("");
     setEnglishWord("");
     setOtherLanguageWord("");
-
-    saveTreeData(treeDataCopy);
   };
 
   const handleNodeClick = (nodeData) => {
@@ -241,7 +240,6 @@ export default function Page() {
 
   return (
     <div className="w-full h-screen flex flex-col">
-      <h1 className="text-2xl font-bold mb-4">Lessons</h1>
       <LessonActions
         setIsEditing={setIsEditing}
         handleAddLesson={handleAddLesson}
@@ -275,10 +273,14 @@ export default function Page() {
           handleSubmit={handleSubmit}
           handleCancelChanges={handleCancelChanges}
           isEditing={isEditing}
+          m
         />
       )}
       {displayLesson && selectedNode.attributes.type == "1" && (
-        <Lesson lessonData={selectedNode} onBack={handleViewLesson} />
+        <LessonType1 lessonData={selectedNode} onBack={handleViewLesson} />
+      )}
+      {displayLesson && selectedNode.attributes.type == "2" && (
+        <LessonType2 lessonData={selectedNode} onBack={handleViewLesson} />
       )}
       <LessonTree
         treeData={treeData}

@@ -257,6 +257,56 @@
           }
         ]
       }
+    },
+    {
+      "name": "test type2",
+      "attributes": {
+        "id": "lesson6",
+        "description": "a",
+        "type": "2",
+        "words": [
+          {
+            "en": "actor",
+            "other": "aktor"
+          },
+          {
+            "en": "doctor",
+            "other": "doktor"
+          },
+          {
+            "en": "professor",
+            "other": "profesor"
+          },
+          {
+            "en": "pilot",
+            "other": "pilot"
+          },
+          {
+            "en": "radio",
+            "other": "radio"
+          },
+          {
+            "en": "robot",
+            "other": "robot"
+          },
+          {
+            "en": "satellite",
+            "other": "satelita"
+          },
+          {
+            "en": "telephone",
+            "other": "telefon"
+          },
+          {
+            "en": "tram",
+            "other": "tramwaj"
+          },
+          {
+            "en": "university",
+            "other": "uniwersytet"
+          }
+        ]
+      }
     }
   ]
 }

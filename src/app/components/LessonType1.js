@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const Lesson = ({ lessonData }) => {
+export default function LessonType1({ lessonData }) {
   const [userInputs, setUserInputs] = useState({});
   const [answersFeedback, setAnswersFeedback] = useState({});
   const [isAllCorrect, setIsAllCorrect] = useState(null);
@@ -98,6 +98,4 @@ const Lesson = ({ lessonData }) => {
       )}
     </div>
   );
-};
-
-export default Lesson;
+}
