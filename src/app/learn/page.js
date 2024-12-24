@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Lesson from "../components/Lesson";
 import LessonTree from "../components/LessonTree";
 import LessonActions from "../components/LessonActions";
-import LessonForm1 from "../components/LessonForm";
+import LessonForm from "../components/LessonForm";
 
 export default function Page() {
   const [treeData, setTreeData] = useState(null);
@@ -258,7 +258,7 @@ export default function Page() {
         </div>
       )}
       {showForm && (
-        <LessonForm1
+        <LessonForm
           lessonName={lessonName}
           lessonDescription={lessonDescription}
           englishWord={englishWord}

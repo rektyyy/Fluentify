@@ -1,4 +1,4 @@
-export default function LessonForm1({
+export default function LessonForm({
   lessonName,
   lessonDescription,
   englishWord,
