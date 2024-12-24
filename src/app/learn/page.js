@@ -67,6 +67,7 @@ export default function Page() {
         attributes: {
           ...selectedNode.attributes,
           description: lessonDescription,
+          type: lessonType,
           words: englishWordArray.map((word, index) => ({
             en: word,
             other: otherLanguageWordArray[index],
@@ -103,6 +104,7 @@ export default function Page() {
         attributes: {
           id: `lesson${treeDataCopy.children.length + 1}`,
           description: lessonDescription,
+          type: lessonType,
           words: englishWordArray.map((word, index) => ({
             en: word,
             other: otherLanguageWordArray[index],
@@ -130,6 +132,7 @@ export default function Page() {
 
   const handleNodeClick = (nodeData) => {
     console.log("nodeData", nodeData);
+    console.log("type", nodeData.data.attributes.type);
     setSelectedNode(nodeData.data);
   };
 
@@ -261,10 +264,12 @@ export default function Page() {
         <LessonForm
           lessonName={lessonName}
           lessonDescription={lessonDescription}
+          lessonType={lessonType}
           englishWord={englishWord}
           otherLanguageWord={otherLanguageWord}
           setLessonName={setLessonName}
           setLessonDescription={setLessonDescription}
+          setLessonType={setLessonType}
           setEnglishWord={setEnglishWord}
           setOtherLanguageWord={setOtherLanguageWord}
           handleSubmit={handleSubmit}
@@ -272,7 +277,7 @@ export default function Page() {
           isEditing={isEditing}
         />
       )}
-      {displayLesson && (
+      {displayLesson && selectedNode.attributes.type == "1" && (
         <Lesson lessonData={selectedNode} onBack={handleViewLesson} />
       )}
       <LessonTree

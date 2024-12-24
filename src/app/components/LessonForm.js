@@ -1,10 +1,12 @@
 export default function LessonForm({
   lessonName,
   lessonDescription,
+  lessonType,
   englishWord,
   otherLanguageWord,
   setLessonName,
   setLessonDescription,
+  setLessonType,
   setEnglishWord,
   setOtherLanguageWord,
   handleSubmit,
@@ -30,26 +32,40 @@ export default function LessonForm({
           onChange={(e) => setLessonDescription(e.target.value)}
           className="border p-2 w-full"
         />
-        <label className="block mb-2">
-          English Word:
-          <input
-            type="text"
-            value={englishWord}
-            onChange={(e) => setEnglishWord(e.target.value)}
-            className="border p-2 w-full"
-            required
-          />
-        </label>
-        <label className="block mb-2">
-          Other language word:
-          <input
-            type="text"
-            value={otherLanguageWord}
-            onChange={(e) => setOtherLanguageWord(e.target.value)}
-            className="border p-2 w-full"
-            required
-          />
-        </label>
+      </label>
+      <label className="block mb-2">
+        Lesson type:
+        <select
+          value={lessonType}
+          onChange={(e) => setLessonType(e.target.value)}
+          className="border p-2 w-full"
+          required
+        >
+          <option value="1">Translation</option>
+          <option value="2">Select correct word</option>
+          <option value="3">Fill sentence</option>
+          <option value="4">Write sentence</option>
+        </select>
+      </label>
+      <label className="block mb-2">
+        English Word:
+        <input
+          type="text"
+          value={englishWord}
+          onChange={(e) => setEnglishWord(e.target.value)}
+          className="border p-2 w-full"
+          required
+        />
+      </label>
+      <label className="block mb-2">
+        Other language word:
+        <input
+          type="text"
+          value={otherLanguageWord}
+          onChange={(e) => setOtherLanguageWord(e.target.value)}
+          className="border p-2 w-full"
+          required
+        />
       </label>
       <button
         type="submit"

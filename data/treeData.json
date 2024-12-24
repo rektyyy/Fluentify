@@ -9,6 +9,7 @@
       "attributes": {
         "id": "lesson1",
         "description": "Opis lekcji 1",
+        "type": "1",
         "words": [
           {
             "other": "radio",
@@ -58,6 +59,7 @@
       "attributes": {
         "id": "lesson2",
         "description": "Opis lekcji 2",
+        "type": "1",
         "words": [
           {
             "other": "idea",
@@ -107,6 +109,7 @@
       "attributes": {
         "id": "lesson3",
         "description": "Opis lekcji 3",
+        "type": "1",
         "words": [
           {
             "other": "atom",
@@ -156,6 +159,7 @@
       "attributes": {
         "id": "lesson4",
         "description": "Opis lekcji 4",
+        "type": "1",
         "words": [
           {
             "en": "actor",
@@ -198,11 +202,6 @@
             "other": "uniwersytet"
           }
         ]
-      },
-      "__rd3t": {
-        "id": "927d3fbd-62d0-40d4-ae37-2e766223908d",
-        "depth": 1,
-        "collapsed": false
       }
     },
     {
@@ -210,6 +209,7 @@
       "attributes": {
         "id": "lesson5",
         "description": "Opis lekcji 5",
+        "type": "1",
         "words": [
           {
             "en": "comfort",
@@ -256,11 +256,6 @@
             "other": "bomba"
           }
         ]
-      },
-      "__rd3t": {
-        "id": "cf54c65d-b606-4ea5-a91e-6c09fb6e76a6",
-        "depth": 1,
-        "collapsed": false
       }
     }
   ]
