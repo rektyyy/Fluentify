@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Lesson from "../components/Lesson";
 import LessonTree from "../components/LessonTree";
 import LessonActions from "../components/LessonActions";
+import LessonForm1 from "../components/LessonForm";
 
 export default function Page() {
   const [treeData, setTreeData] = useState(null);
@@ -15,6 +16,7 @@ export default function Page() {
   const [showForm, setShowForm] = useState(false);
   const [lessonName, setLessonName] = useState("");
   const [lessonDescription, setLessonDescription] = useState("");
+  const [lessonType, setLessonType] = useState(1);
   const [selectedNode, setSelectedNode] = useState(null);
   const [englishWord, setEnglishWord] = useState("");
   const [otherLanguageWord, setOtherLanguageWord] = useState("");
@@ -152,7 +154,11 @@ export default function Page() {
       return;
     }
 
-    if (confirm(`Are you sure you want to delete this lesson: "${selectedNode.name}"?`)) {
+    if (
+      confirm(
+        `Are you sure you want to delete this lesson: "${selectedNode.name}"?`
+      )
+    ) {
       const treeDataCopy = JSON.parse(JSON.stringify(treeData));
       const updatedTreeData = deleteNodeById(
         treeDataCopy,
@@ -252,59 +258,19 @@ export default function Page() {
         </div>
       )}
       {showForm && (
-        <form onSubmit={handleSubmit} className="mt-4">
-          <label className="block mb-2">
-            Lesson name:
-            <input
-              type="text"
-              value={lessonName}
-              onChange={(e) => setLessonName(e.target.value)}
-              className="border p-2 w-full"
-              required
-            />
-          </label>
-          <label className="block mb-2">
-            Lesson description:
-            <textarea
-              value={lessonDescription}
-              onChange={(e) => setLessonDescription(e.target.value)}
-              className="border p-2 w-full"
-            />
-            <label className="block mb-2">
-              English Word:
-              <input
-                type="text"
-                value={englishWord}
-                onChange={(e) => setEnglishWord(e.target.value)}
-                className="border p-2 w-full"
-                required
-              />
-            </label>
-            <label className="block mb-2">
-              Other language word:
-              <input
-                type="text"
-                value={otherLanguageWord}
-                onChange={(e) => setOtherLanguageWord(e.target.value)}
-                className="border p-2 w-full"
-                required
-              />
-            </label>
-          </label>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-green-500 text-white rounded mt-2"
-          >
-            {isEditing ? "Save changes" : "Add lesson"}
-          </button>
-          <button
-            type="button"
-            onClick={handleCancelChanges}
-            className="px-4 py-2 bg-gray-500 text-white rounded mt-2 ml-2"
-          >
-            Cancel changes
-          </button>
-        </form>
+        <LessonForm1
+          lessonName={lessonName}
+          lessonDescription={lessonDescription}
+          englishWord={englishWord}
+          otherLanguageWord={otherLanguageWord}
+          setLessonName={setLessonName}
+          setLessonDescription={setLessonDescription}
+          setEnglishWord={setEnglishWord}
+          setOtherLanguageWord={setOtherLanguageWord}
+          handleSubmit={handleSubmit}
+          handleCancelChanges={handleCancelChanges}
+          isEditing={isEditing}
+        />
       )}
       {displayLesson && (
         <Lesson lessonData={selectedNode} onBack={handleViewLesson} />
