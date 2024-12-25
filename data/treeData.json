@@ -52,7 +52,8 @@
             "en": "sport"
           }
         ]
-      }
+      },
+      "children": []
     },
     {
       "name": "Lekcja 2",
@@ -102,57 +103,59 @@
             "en": "club"
           }
         ]
-      }
+      },
+      "children": []
     },
     {
       "name": "Lekcja 3",
       "attributes": {
         "id": "lesson3",
         "description": "Opis lekcji 3",
-        "type": "1",
+        "type": 1,
         "words": [
           {
-            "other": "atom",
-            "en": "atom"
+            "en": "atom",
+            "other": "atom"
           },
           {
-            "other": "balon",
-            "en": "balloon"
+            "en": "balloon",
+            "other": "balon"
           },
           {
-            "other": "golf",
-            "en": "golf"
+            "en": "golf",
+            "other": "golf"
           },
           {
-            "other": "bank",
-            "en": "bank"
+            "en": "bank",
+            "other": "bank"
           },
           {
-            "other": "lamp",
-            "en": "lamp"
+            "en": "lamp",
+            "other": "lamp"
           },
           {
-            "other": "mapa",
-            "en": "map"
+            "en": "map",
+            "other": "mapa"
           },
           {
-            "other": "metro",
-            "en": "metro"
+            "en": "metro",
+            "other": "metro"
           },
           {
-            "other": "motor",
-            "en": "motor"
+            "en": "motor",
+            "other": "motor"
           },
           {
-            "other": "piano",
-            "en": "piano"
+            "en": "piano",
+            "other": "piano"
           },
           {
-            "other": "tango",
-            "en": "tango"
+            "en": "tango",
+            "other": "tango"
           }
         ]
-      }
+      },
+      "children": []
     },
     {
       "name": "Lekcja 4",
@@ -202,7 +205,8 @@
             "other": "uniwersytet"
           }
         ]
-      }
+      },
+      "children": []
     },
     {
       "name": "Lekcja 5",
@@ -256,7 +260,8 @@
             "other": "bomba"
           }
         ]
-      }
+      },
+      "children": []
     },
     {
       "name": "test type2",
@@ -306,7 +311,8 @@
             "other": "uniwersytet"
           }
         ]
-      }
+      },
+      "children": []
     }
   ]
 }

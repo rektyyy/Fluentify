@@ -43,6 +43,32 @@ export default function Page() {
   }, []);
 
   const handleSubmit = (e) => {
+    const updateNodeById = (node, id, updatedNode) => {
+      if (node.attributes.id === id) {
+        return updatedNode;
+      }
+
+      if (node.children) {
+        node.children = node.children.map((child) =>
+          updateNodeById(child, id, updatedNode)
+        );
+      }
+      return node;
+    };
+
+    const addNewNode = (node, id, newNode) => {
+      if (node.attributes.id === id) {
+        node.children.push(newNode);
+        return node;
+      }
+      if (node.children) {
+        node.children = node.children.map((child) =>
+          addNewNode(child, id, newNode)
+        );
+      }
+      return node;
+    };
+
     e.preventDefault();
 
     const treeDataCopy = JSON.parse(JSON.stringify(treeData));
@@ -70,20 +96,7 @@ export default function Page() {
             other: otherLanguageWordArray[index],
           })),
         },
-      };
-
-      const updateNodeById = (node, id, updatedNode) => {
-        if (node.attributes.id === id) {
-          return updatedNode;
-        }
-
-        if (node.children) {
-          node.children = node.children.map((child) =>
-            updateNodeById(child, id, updatedNode)
-          );
-        }
-
-        return node;
+        children: selectedNode.children,
       };
 
       const updatedTreeData = updateNodeById(
@@ -107,12 +120,14 @@ export default function Page() {
             other: otherLanguageWordArray[index],
           })),
         },
+        children: [],
       };
 
-      const updatedTreeData = {
-        ...treeDataCopy,
-        children: [...treeDataCopy.children, newLesson],
-      };
+      const updatedTreeData = addNewNode(
+        treeDataCopy,
+        selectedNode.attributes.id,
+        newLesson
+      );
       setTreeData(updatedTreeData);
       saveTreeData(updatedTreeData);
     }
@@ -143,12 +158,21 @@ export default function Page() {
 
   const handleDeleteNode = () => {
     const deleteNodeById = (node, id) => {
-      if (!node.children) return node;
+      if (!node.children || node.children.length === 0) return node;
 
-      node.children = node.children
-        .filter((child) => child.attributes.id !== id)
-        .map((child) => deleteNodeById(child, id));
-
+      for (let i = 0; i < node.children.length; i++) {
+        if (node.children[i].attributes.id === id) {
+          const leftoverChildren = node.children[i].children;
+          //usuwanie z tablicy
+          node.children.splice(i, 1);
+          node.children = node.children.concat(leftoverChildren);
+          return node;
+        }
+        const result = deleteNodeById(node.children[i], id);
+        if (result) {
+          return node;
+        }
+      }
       return node;
     };
 
@@ -172,6 +196,7 @@ export default function Page() {
         treeDataCopy,
         selectedNode.attributes.id
       );
+      console.log(updatedTreeData);
       setTreeData(updatedTreeData);
       setSelectedNode(null);
 
@@ -216,20 +241,6 @@ export default function Page() {
     setEnglishWord("");
     setOtherLanguageWord("");
   };
-
-  const renderCustomNode = ({ nodeDatum, toggleNode, handleNodeClick }) => (
-    <g
-      onClick={() => {
-        toggleNode();
-        handleNodeClick({ data: nodeDatum });
-      }}
-    >
-      <text fill="black" x="0" y="-20" textAnchor="middle">
-        {nodeDatum.name}
-      </text>
-      <circle r={15} fill="lightblue" />
-    </g>
-  );
 
   const saveTreeData = (data) => {
     fetch("/api/saveTreeData", {
@@ -294,7 +305,6 @@ export default function Page() {
         treeData={treeData}
         dimensions={dimensions}
         handleNodeClick={handleNodeClick}
-        renderCustomNode={renderCustomNode}
       />
     </div>
   );
