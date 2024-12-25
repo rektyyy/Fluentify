@@ -42,10 +42,6 @@ export default function Page() {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const handleAddLesson = () => {
-    setShowForm(!showForm);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -135,6 +131,16 @@ export default function Page() {
     setSelectedNode(nodeData.data);
   };
 
+  const handleAddLesson = () => {
+    if (isEditing) {
+      handleCancelChanges();
+      setShowForm(true);
+    } else {
+      setShowForm(!showForm);
+      setIsEditing(false);
+    }
+  };
+
   const handleDeleteNode = () => {
     const deleteNodeById = (node, id) => {
       if (!node.children) return node;
@@ -147,7 +153,7 @@ export default function Page() {
     };
 
     if (!selectedNode) {
-      alert("Didn't select any lesson to delete!");
+      alert("You didn't select any lesson to delete!");
       return;
     }
 
@@ -178,13 +184,16 @@ export default function Page() {
       alert("Didn't select any lesson to modify!");
       return;
     }
-
-    setLessonName(selectedNode.name);
-    setLessonDescription(selectedNode.attributes.description || "");
+    if (showForm && isEditing) {
+      handleCancelChanges();
+      return;
+    }
     if (
       selectedNode.attributes.words &&
       selectedNode.attributes.words.length > 0
     ) {
+      setLessonName(selectedNode.name);
+      setLessonDescription(selectedNode.attributes.description);
       setEnglishWord(
         selectedNode.attributes.words.map((word) => word.en).join(",") || ""
       );
@@ -273,7 +282,6 @@ export default function Page() {
           handleSubmit={handleSubmit}
           handleCancelChanges={handleCancelChanges}
           isEditing={isEditing}
-          m
         />
       )}
       {displayLesson && selectedNode.attributes.type == "1" && (
