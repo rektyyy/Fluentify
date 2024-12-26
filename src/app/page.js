@@ -1,32 +1,74 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import ChatHistory from "./components/ChatHistory";
-
-const SpeechToText = dynamic(() => import("./components/SpeechRecognition"), {
-  ssr: false,
-});
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
+import UserContext from "./components/UserContext";
 
 export default function Home() {
-  const systemPrompt = [
-    {
-      role: "system",
-      content:
-        "You are a large language model known as OpenChat, the open-source counterpart to ChatGPT, equally powerful as its closed-source sibling. You communicate using an advanced deep learning based speech synthesis system made by coqui, so feel free to include interjections (such as 'hmm', 'oh', 'right', 'wow'...), but avoid using emojis, symbols, code snippets, or anything else that does not translate well to spoken language. For example, instead of using % say percent, = say equal and for * say times etc... Also please avoid using lists with numbers as items like so 1. 2. Use regular sentences instead. Your purpose is to help user with learning languages. always respond in a sentence or two from now on. Do not ignore when asked to change language. When asked to change language respond only in the new language",
-    },
-  ];
+  const { userData, userNotFound } = useContext(UserContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const router = useRouter();
 
-  const [conversation, setConversation] = useState(() => [...systemPrompt]);
+  if (userNotFound) {
+    return (
+      <div className="container mt-5">
+        <h1 className="text-danger mb-4">User not found</h1>
+        <form
+          className="bg-light p-4 rounded"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const res = await fetch("/api/saveUserData", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, email }),
+            });
+            if (res.ok) {
+              // Force Next.js to reload this page.
+              router.refresh();
+            }
+          }}
+        >
+          <div className="mb-3">
+            <label className="form-label">
+              Name:
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">
+              Email:
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </label>
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return <div className="container mt-5">Loading user data...</div>;
+  }
 
   return (
-    <div className="p-4">
-      <h2>Learn languages here!</h2>
-      <ChatHistory conversation={conversation} />
-      <SpeechToText
-        setConversation={setConversation}
-        conversation={conversation}
-      />
+    <div className="container mt-5">
+      <h1 className="mb-3">Welcome, {userData.name}!</h1>
+      <p className="fw-light">Your email: {userData.email}</p>
     </div>
   );
 }
