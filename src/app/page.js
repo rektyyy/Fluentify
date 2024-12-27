@@ -7,7 +7,11 @@ export default function Home() {
   const { userData, setUserData, userNotFound, setUserNotFound } =
     useContext(UserContext);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [language, setLanguage] = useState("");
+
+  function handleLanguageChange(e) {
+    setLanguage(e.target.value.split(" "));
+  }
 
   if (userNotFound) {
     return (
@@ -20,10 +24,10 @@ export default function Home() {
             const res = await fetch("/api/saveUserData", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, email }),
+              body: JSON.stringify({ name, language }),
             });
             if (res.ok) {
-              setUserData({ name: name, email: email });
+              setUserData({ name: name, language: language });
               setUserNotFound(false);
             }
           }}
@@ -42,16 +46,25 @@ export default function Home() {
           </div>
           <div className="mb-3">
             <label className="form-label">
-              Email:
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              Language:
+              <select className="form-select" onChange={handleLanguageChange}>
+                <option value="en-US en English">English</option>
+                <option value="es-ES es Spanish">Spanish</option>
+                <option value="fr-FR fr French">French</option>
+                <option value="de-DE de German">German</option>
+                <option value="it-IT it Italian">Italian</option>
+                <option value="pt-BR pt Portuguese">Portuguese</option>
+                <option value="pl-PL pl Polish">Polish</option>
+                <option value="tr-TR tr Turkish">Turkish</option>
+                <option value="ru-RU ru Russian">Russian</option>
+                <option value="nl-NL nl Dutch">Dutch</option>
+                <option value="zh-CN zh Chinese">Chinese</option>
+                <option value="ko-KR ko Korean">Korean</option>
+                <option value="ja-JP ja Japanese">Japanese</option>
+              </select>
             </label>
           </div>
+
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
@@ -67,7 +80,7 @@ export default function Home() {
   return (
     <div className="container mt-5">
       <h1 className="mb-3">Welcome, {userData.name}!</h1>
-      <p className="fw-light">Your email: {userData.email}</p>
+      <p className="fw-light">Your language: {userData.language[2]}</p>
     </div>
   );
 }
