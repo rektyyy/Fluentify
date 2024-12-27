@@ -1,4 +1,4 @@
-en, es, fr, de, it, pt, pl, tr, ru, nl, cs, ar, zh-cn, hu, ko, ja, hi
+en, es, fr, de, it, pt, pl, tr, ru, nl, cs, ar, zh, hu, ko, ja, hi
 en-US, es-ES, fr-FR, de-DE, it-IT, pt-BR, pl-PL, tr-TR, ru-RU, nl-NL, cs - czech missing, ar - arabic missing, zh-CN, hu - hungarian missing, ko-KR, ja-JP, hi - hindi missing
 
 first line for tts
