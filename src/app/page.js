@@ -1,14 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import UserContext from "./components/UserContext";
 
 export default function Home() {
-  const { userData, userNotFound } = useContext(UserContext);
+  const { userData, setUserData, userNotFound, setUserNotFound } =
+    useContext(UserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const router = useRouter();
 
   if (userNotFound) {
     return (
@@ -24,8 +23,8 @@ export default function Home() {
               body: JSON.stringify({ name, email }),
             });
             if (res.ok) {
-              // Force Next.js to reload this page.
-              router.refresh();
+              setUserData({ name: name, email: email });
+              setUserNotFound(false);
             }
           }}
         >

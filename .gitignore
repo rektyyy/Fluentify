@@ -37,3 +37,4 @@ next-env.d.ts
 
 # treedata
 /data/treeData.json
+/data/userData.json

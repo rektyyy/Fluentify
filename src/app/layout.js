@@ -36,7 +36,9 @@ export default function RootLayout({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userData, userNotFound }}>
+    <UserContext.Provider
+      value={{ userData, userNotFound, setUserData, setUserNotFound }}
+    >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
