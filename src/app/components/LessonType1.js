@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LessonType1({ lessonData }) {
+export default function LessonType1({ lessonData, onBack }) {
   const [userInputs, setUserInputs] = useState({});
   const [answersFeedback, setAnswersFeedback] = useState({});
   const [isAllCorrect, setIsAllCorrect] = useState(null);
@@ -94,7 +94,15 @@ export default function LessonType1({ lessonData }) {
         Check your answers
       </button>
       {isAllCorrect === true && (
-        <p className="text-green-500">All answers are correct!</p>
+        <div>
+          <p className="text-green-500">All answers are correct!</p>
+          <button
+            onClick={onBack}
+            className="px-4 py-2 bg-blue-500 text-white rounded mt-2"
+          >
+            Talk with AI
+          </button>
+        </div>
       )}
     </div>
   );

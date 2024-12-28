@@ -264,6 +264,12 @@ export default function Page() {
 
   if (!treeData) return <div>Loading...</div>;
 
+  if (displayLesson && selectedNode.attributes.type == "1") {
+    return <LessonType1 lessonData={selectedNode} onBack={handleViewLesson} />;
+  } else if (displayLesson && selectedNode.attributes.type == "2") {
+    return <LessonType2 lessonData={selectedNode} onBack={handleViewLesson} />;
+  }
+
   return (
     <div className="w-full h-screen flex flex-col">
       <LessonActions
@@ -300,12 +306,6 @@ export default function Page() {
           handleCancelChanges={handleCancelChanges}
           isEditing={isEditing}
         />
-      )}
-      {displayLesson && selectedNode.attributes.type == "1" && (
-        <LessonType1 lessonData={selectedNode} onBack={handleViewLesson} />
-      )}
-      {displayLesson && selectedNode.attributes.type == "2" && (
-        <LessonType2 lessonData={selectedNode} onBack={handleViewLesson} />
       )}
       <LessonTree
         treeData={treeData}

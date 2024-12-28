@@ -1,6 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
 
-export default function LessonType2({ lessonData }) {
+export default function LessonType2({ lessonData, onBack }) {
+  const [randomWords, setRandomWords] = useState([]);
+  const [feedback, setFeedback] = useState("");
+  const [solvedCount, setSolvedCount] = useState(0);
+  const [lessonCompleted, setLessonCompleted] = useState(false);
+
   const englishWordArray = useMemo(
     () => lessonData.attributes.words.map((word) => word.en),
     [lessonData]
@@ -26,9 +31,6 @@ export default function LessonType2({ lessonData }) {
     randomLang === "en"
       ? otherWordArray[targetIndex]
       : englishWordArray[targetIndex];
-
-  const [randomWords, setRandomWords] = useState([]);
-  const [feedback, setFeedback] = useState("");
 
   function generateRandomWords(chosenLang, chosenIndex) {
     const correctWord =
@@ -62,6 +64,14 @@ export default function LessonType2({ lessonData }) {
   }, [lessonData, randomLang, targetIndex]);
 
   function handleClick(word) {
+    if (word === targetWord) {
+      setSolvedCount((prev) => prev + 1);
+      if (solvedCount + 1 === lessonData.attributes.words.length) {
+        setLessonCompleted(true);
+      }
+    } else {
+      setSolvedCount(0);
+    }
     setFeedback(word === targetWord ? "Correct!" : "Incorrect. Try again.");
   }
 
@@ -71,6 +81,24 @@ export default function LessonType2({ lessonData }) {
     const newIndex = Math.floor(Math.random() * englishWordArray.length);
     setRandomLang(newLang);
     setTargetIndex(newIndex);
+  }
+
+  if (lessonCompleted) {
+    return (
+      <div className="p-4 max-w-md mx-auto bg-slate-100 rounded-lg shadow-md text-center">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">
+          Congratulations! You've completed the lesson.
+        </h3>
+        <button
+          onClick={onBack}
+          className="block mx-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 
+                   text-white rounded-lg transition-colors duration-200 
+                   shadow-md hover:shadow-lg"
+        >
+          Back
+        </button>
+      </div>
+    );
   }
 
   return (
