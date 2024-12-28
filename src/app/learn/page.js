@@ -149,6 +149,10 @@ export default function Page() {
   };
 
   const handleAddLesson = () => {
+    if (!selectedNode) {
+      alert("You didn't select any lesson to modify!");
+      return;
+    }
     if (isEditing) {
       handleCancelChanges();
       setShowForm(true);
@@ -208,7 +212,7 @@ export default function Page() {
 
   const handleModifyLesson = () => {
     if (!selectedNode) {
-      alert("Didn't select any lesson to modify!");
+      alert("You didn't select any lesson to modify!");
       return;
     }
     if (showForm && isEditing) {
