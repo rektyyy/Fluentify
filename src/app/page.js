@@ -21,7 +21,7 @@ export default function Home() {
           className="bg-light p-4 rounded"
           onSubmit={async (e) => {
             e.preventDefault();
-            const res = await fetch("/api/saveUserData", {
+            const res = await fetch("/api/userData", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name, language }),

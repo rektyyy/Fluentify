@@ -23,7 +23,9 @@ export default function RootLayout({ children }) {
   const [userNotFound, setUserNotFound] = useState(false);
 
   useEffect(() => {
-    fetch("/api/getUserData")
+    fetch("/api/userData", {
+      method: "GET",
+    })
       .then((response) => {
         if (response.status === 404) {
           setUserNotFound(true);

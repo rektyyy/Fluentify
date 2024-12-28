@@ -25,7 +25,9 @@ export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    fetch("/api/getTreeData")
+    fetch("/api/treeData", {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => setTreeData(data));
   }, []);
@@ -243,7 +245,7 @@ export default function Page() {
   };
 
   const saveTreeData = (data) => {
-    fetch("/api/saveTreeData", {
+    fetch("/api/treeData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

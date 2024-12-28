@@ -68,21 +68,6 @@
             ]
           },
           "children": []
-        },
-        {
-          "name": "a",
-          "attributes": {
-            "id": "lesson7",
-            "description": "a",
-            "type": 1,
-            "words": [
-              {
-                "en": "a",
-                "other": "a"
-              }
-            ]
-          },
-          "children": []
         }
       ]
     },
