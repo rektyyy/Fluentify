@@ -131,6 +131,7 @@ export default function Page() {
           id: `lesson${treeDataCopy.children.length + 1}`,
           description: lessonDescription,
           type: lessonType,
+          finished: false,
           words: englishWordArray.map((word, index) => ({
             en: word,
             other: otherLanguageWordArray[index],

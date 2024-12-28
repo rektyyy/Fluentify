@@ -13,7 +13,10 @@ export default function LessonTree({ treeData, dimensions, handleNodeClick }) {
       <text fill="black" x="0" y="-20" textAnchor="middle">
         {nodeDatum.name}
       </text>
-      <circle r={15} fill="lightblue" />
+      <circle
+        r={15}
+        fill={nodeDatum.attributes.finished ? "lightgreen" : "lightblue"}
+      />
     </g>
   );
 
