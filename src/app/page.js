@@ -41,13 +41,19 @@ export default function Home() {
                 placeholder="Enter your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </label>
           </div>
           <div className="mb-3">
             <label className="form-label">
               Language:
-              <select className="form-select" onChange={handleLanguageChange}>
+              <select
+                className="form-select"
+                onChange={handleLanguageChange}
+                required
+              >
+                <option value="">Select your language</option>
                 <option value="en-US en English">English</option>
                 <option value="es-ES es Spanish">Spanish</option>
                 <option value="fr-FR fr French">French</option>

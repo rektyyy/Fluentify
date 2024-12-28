@@ -5,6 +5,33 @@ import UserContext from "./UserContext";
 
 export default function AppNavbar() {
   const { userData } = useContext(UserContext);
+
+  function handleDelete() {
+    if (
+      confirm("Are you sure you want to delete your data? THIS IS PERMANENT!")
+    ) {
+      fetch("/api/userData", {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/";
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+
+      fetch("/api/treeData", {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/";
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  }
+
   return (
     <Navbar bg="light" variant="light">
       <Container>
@@ -16,25 +43,21 @@ export default function AppNavbar() {
         {userData ? (
           <Nav className="ms-auto d-flex align-items-center">
             <NavDropdown title={userData.name} id="userDropdown">
-              <NavDropdown.Item href="/profile">
-                Change profile
-              </NavDropdown.Item>
-              <NavDropdown.Item onClick={() => alert("Delete data clicked")}>
+              <NavDropdown.Item href="/">Change profile</NavDropdown.Item>
+              <NavDropdown.Item onClick={handleDelete}>
                 Delete data
               </NavDropdown.Item>
             </NavDropdown>
-            {userData.language && (
-              <img
-                src={`/flags/${userData.language[1]}.jpg`}
-                alt={`${userData.language[1]} flag`}
-                style={{ width: "40px", height: "25px" }}
-              />
-            )}
+            <img
+              src={`/flags/${userData.language[1]}.jpg`}
+              alt={`${userData.language[1]} flag`}
+              style={{ width: "40px", height: "25px" }}
+            />
           </Nav>
         ) : (
           <Nav className="ms-auto">
             <Button variant="outline-primary" href="/">
-              Select Profile
+              Create profile
             </Button>
           </Nav>
         )}
