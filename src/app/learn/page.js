@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import LessonType1 from "../components/LessonType1";
 import LessonType2 from "../components/LessonType2";
 import LessonTree from "../components/LessonTree";
 import LessonActions from "../components/LessonActions";
 import LessonForm from "../components/LessonForm";
+import UserContext from "../components/UserContext";
 
 export default function Page() {
   const [treeData, setTreeData] = useState(null);
@@ -23,6 +24,7 @@ export default function Page() {
   const [otherLanguageWord, setOtherLanguageWord] = useState("");
   const [displayLesson, setDisplayLesson] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const { userData, setUserData } = useContext(UserContext);
 
   useEffect(() => {
     fetch("/api/treeData", {
@@ -67,6 +69,16 @@ export default function Page() {
       selectedNode.attributes.id,
       updatedNode
     );
+
+    const finishedLessons = userData.finished + 1;
+    const newUserData = { ...userData, finished: finishedLessons };
+    setUserData(newUserData);
+    fetch("/api/userData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUserData),
+    });
+
     setTreeData(updatedTreeData);
     saveTreeData(updatedTreeData);
   }

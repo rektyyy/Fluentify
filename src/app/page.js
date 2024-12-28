@@ -24,10 +24,14 @@ export default function Home() {
             const res = await fetch("/api/userData", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, language }),
+              body: JSON.stringify({
+                name: name,
+                language: language,
+                finished: 0,
+              }),
             });
             if (res.ok) {
-              setUserData({ name: name, language: language });
+              setUserData({ name: name, language: language, finished: 0 });
               setUserNotFound(false);
             }
           }}
@@ -87,6 +91,7 @@ export default function Home() {
     <div className="container mt-5">
       <h1 className="mb-3">Welcome, {userData.name}!</h1>
       <p className="fw-light">Your language: {userData.language[2]}</p>
+      <p className="fw-light">Lessons finished: {userData.finished}</p>
     </div>
   );
 }
