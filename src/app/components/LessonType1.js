@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function LessonType1({ lessonData, onBack }) {
+export default function LessonType1({ lessonData, onBack, finishLesson }) {
   const [userInputs, setUserInputs] = useState({});
   const [answersFeedback, setAnswersFeedback] = useState({});
   const [isAllCorrect, setIsAllCorrect] = useState(null);
@@ -39,6 +39,11 @@ export default function LessonType1({ lessonData, onBack }) {
     setAnswersFeedback(feedback);
     setIsAllCorrect(allCorrect);
   };
+
+  function handleWin() {
+    finishLesson();
+    onBack();
+  }
 
   return (
     <div>
@@ -97,7 +102,7 @@ export default function LessonType1({ lessonData, onBack }) {
         <div>
           <p className="text-green-500">All answers are correct!</p>
           <button
-            onClick={onBack}
+            onClick={handleWin}
             className="px-4 py-2 bg-blue-500 text-white rounded mt-2"
           >
             Talk with AI

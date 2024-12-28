@@ -44,20 +44,34 @@ export default function Page() {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const handleSubmit = (e) => {
-    const updateNodeById = (node, id, updatedNode) => {
-      if (node.attributes.id === id) {
-        return updatedNode;
-      }
+  const updateNodeById = (node, id, updatedNode) => {
+    if (node.attributes.id === id) {
+      return updatedNode;
+    }
 
-      if (node.children) {
-        node.children = node.children.map((child) =>
-          updateNodeById(child, id, updatedNode)
-        );
-      }
-      return node;
+    if (node.children) {
+      node.children = node.children.map((child) =>
+        updateNodeById(child, id, updatedNode)
+      );
+    }
+    return node;
+  };
+
+  function finishLesson(selectedNode) {
+    const updatedNode = {
+      ...selectedNode,
+      attributes: { ...selectedNode.attributes, finished: true },
     };
+    const updatedTreeData = updateNodeById(
+      treeData,
+      selectedNode.attributes.id,
+      updatedNode
+    );
+    setTreeData(updatedTreeData);
+    saveTreeData(updatedTreeData);
+  }
 
+  const handleSubmit = (e) => {
     const addNewNode = (node, id, newNode) => {
       if (node.attributes.id === id) {
         node.children.push(newNode);
@@ -265,9 +279,21 @@ export default function Page() {
   if (!treeData) return <div>Loading...</div>;
 
   if (displayLesson && selectedNode.attributes.type == "1") {
-    return <LessonType1 lessonData={selectedNode} onBack={handleViewLesson} />;
+    return (
+      <LessonType1
+        lessonData={selectedNode}
+        onBack={handleViewLesson}
+        finishLesson={() => finishLesson(selectedNode)}
+      />
+    );
   } else if (displayLesson && selectedNode.attributes.type == "2") {
-    return <LessonType2 lessonData={selectedNode} onBack={handleViewLesson} />;
+    return (
+      <LessonType2
+        lessonData={selectedNode}
+        onBack={handleViewLesson}
+        finishLesson={() => finishLesson(selectedNode)}
+      />
+    );
   }
 
   return (

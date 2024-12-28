@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 
-export default function LessonType2({ lessonData, onBack }) {
+export default function LessonType2({ lessonData, onBack, finishLesson }) {
   const [randomWords, setRandomWords] = useState([]);
   const [feedback, setFeedback] = useState("");
   const [solvedCount, setSolvedCount] = useState(0);
@@ -82,7 +82,10 @@ export default function LessonType2({ lessonData, onBack }) {
     setRandomLang(newLang);
     setTargetIndex(newIndex);
   }
-
+  function handleWin() {
+    finishLesson();
+    onBack();
+  }
   if (lessonCompleted) {
     return (
       <div className="p-4 max-w-md mx-auto bg-slate-100 rounded-lg shadow-md text-center">
@@ -90,7 +93,7 @@ export default function LessonType2({ lessonData, onBack }) {
           Congratulations! You've completed the lesson.
         </h3>
         <button
-          onClick={onBack}
+          onClick={handlwWin}
           className="block mx-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 
                    text-white rounded-lg transition-colors duration-200 
                    shadow-md hover:shadow-lg"

@@ -10,6 +10,7 @@
         "id": "lesson1",
         "description": "Opis lekcji 1",
         "type": "1",
+        "finished": false,
         "words": [
           {
             "other": "radio",
@@ -60,6 +61,7 @@
             "id": "lesson7",
             "description": "a",
             "type": 1,
+            "finished": true,
             "words": [
               {
                 "en": "a",
@@ -67,7 +69,12 @@
               }
             ]
           },
-          "children": []
+          "children": [],
+          "__rd3t": {
+            "id": "99119fee-9ef4-4f86-b8bf-9d4356d1a8b3",
+            "depth": 2,
+            "collapsed": false
+          }
         }
       ]
     },
@@ -77,6 +84,7 @@
         "id": "lesson2",
         "description": "Opis lekcji 2",
         "type": "1",
+        "finished": false,
         "words": [
           {
             "other": "idea",
@@ -128,6 +136,7 @@
         "id": "lesson3",
         "description": "Opis lekcji 3",
         "type": 1,
+        "finished": false,
         "words": [
           {
             "en": "atom",
@@ -179,6 +188,7 @@
         "id": "lesson4",
         "description": "Opis lekcji 4",
         "type": "1",
+        "finished": false,
         "words": [
           {
             "en": "actor",
@@ -230,6 +240,7 @@
         "id": "lesson5",
         "description": "Opis lekcji 5",
         "type": "1",
+        "finished": false,
         "words": [
           {
             "en": "comfort",
@@ -285,6 +296,7 @@
         "id": "lesson6",
         "description": "a",
         "type": "2",
+        "finished": false,
         "words": [
           {
             "en": "actor",
