@@ -296,7 +296,7 @@
         "id": "lesson6",
         "description": "a",
         "type": "2",
-        "finished": false,
+        "finished": true,
         "words": [
           {
             "en": "actor",
@@ -340,7 +340,12 @@
           }
         ]
       },
-      "children": []
+      "children": [],
+      "__rd3t": {
+        "id": "e23f67ec-0bf9-4673-a52e-d238e1a74f07",
+        "depth": 1,
+        "collapsed": false
+      }
     }
   ]
 }

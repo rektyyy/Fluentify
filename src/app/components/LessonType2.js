@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 export default function LessonType2({ lessonData, onBack, finishLesson }) {
   const [randomWords, setRandomWords] = useState([]);
@@ -32,36 +32,41 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
       ? otherWordArray[targetIndex]
       : englishWordArray[targetIndex];
 
-  function generateRandomWords(chosenLang, chosenIndex) {
+  const generateRandomWords = useCallback(() => {
     const correctWord =
-      chosenLang === "en"
-        ? englishWordArray[chosenIndex]
-        : otherWordArray[chosenIndex];
+      randomLang === "en"
+        ? englishWordArray[targetIndex]
+        : otherWordArray[targetIndex];
 
     // Build a list of all indexes except the correct one
     let availableIndexes = [...Array(englishWordArray.length).keys()].filter(
-      (i) => i !== chosenIndex
+      (i) => i !== targetIndex
     );
 
     // Pick 3 unique random indexes
     const wrongWords = [];
     for (let i = 0; i < 3; i++) {
+      if (availableIndexes.length === 0) break; // Prevent infinite loop
       const randIdx = Math.floor(Math.random() * availableIndexes.length);
-      const pickedIndex = availableIndexes[randIdx];
-      availableIndexes.splice(randIdx, 1);
       wrongWords.push(
-        chosenLang === "en"
-          ? englishWordArray[pickedIndex]
-          : otherWordArray[pickedIndex]
+        randomLang === "en"
+          ? otherWordArray[availableIndexes[randIdx]]
+          : englishWordArray[availableIndexes[randIdx]]
       );
+      availableIndexes.splice(randIdx, 1); // Remove selected index
     }
 
-    const tempWords = [correctWord, ...wrongWords];
-    return tempWords.sort(() => Math.random() - 0.5);
-  }
+    // Combine correct word with wrong words and shuffle
+    const options = [...wrongWords, correctWord].sort(
+      () => 0.5 - Math.random()
+    );
+    return options;
+  }, [randomLang, targetIndex, englishWordArray, otherWordArray]);
+
   useEffect(() => {
-    setRandomWords(generateRandomWords(randomLang, targetIndex));
-  }, [lessonData, randomLang, targetIndex]);
+    const options = generateRandomWords();
+    setRandomWords(options);
+  }, [generateRandomWords]);
 
   function handleClick(word) {
     if (word === targetWord) {
@@ -90,10 +95,10 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
     return (
       <div className="p-4 max-w-md mx-auto bg-slate-100 rounded-lg shadow-md text-center">
         <h3 className="text-lg font-semibold mb-4 text-gray-800">
-          Congratulations! You've completed the lesson.
+          Congratulations! You&apos;ve completed the lesson.
         </h3>
         <button
-          onClick={handlwWin}
+          onClick={handleWin}
           className="block mx-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 
                    text-white rounded-lg transition-colors duration-200 
                    shadow-md hover:shadow-lg"

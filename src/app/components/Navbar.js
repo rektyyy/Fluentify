@@ -2,6 +2,7 @@
 import { Navbar, Nav, Container, NavDropdown, Button } from "react-bootstrap";
 import { useContext } from "react";
 import UserContext from "./UserContext";
+import Image from "next/image";
 
 export default function AppNavbar() {
   const { userData } = useContext(UserContext);
@@ -48,10 +49,11 @@ export default function AppNavbar() {
                 Delete data
               </NavDropdown.Item>
             </NavDropdown>
-            <img
-              src={`/flags/${userData.language[1]}.jpg`}
+            <Image
+              src={`/flags/${userData.language[1]}.jpg`} // Path to the flag image
               alt={`${userData.language[1]} flag`}
-              style={{ width: "40px", height: "25px" }}
+              width={40} // Set the desired width
+              height={25} // Set the desired height
             />
           </Nav>
         ) : (

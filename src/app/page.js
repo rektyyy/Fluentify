@@ -13,29 +13,28 @@ export default function Home() {
     setLanguage(e.target.value.split(" "));
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const res = await fetch("/api/userData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        language: language,
+        finished: 0,
+      }),
+    });
+    if (res.ok) {
+      setUserData({ name: name, language: language, finished: 0 });
+      setUserNotFound(false);
+    }
+  }
+
   if (userNotFound) {
     return (
       <div className="container mt-5">
         <h1 className="text-danger mb-4">User not found</h1>
-        <form
-          className="bg-light p-4 rounded"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const res = await fetch("/api/userData", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: name,
-                language: language,
-                finished: 0,
-              }),
-            });
-            if (res.ok) {
-              setUserData({ name: name, language: language, finished: 0 });
-              setUserNotFound(false);
-            }
-          }}
-        >
+        <form className="bg-light p-4 rounded" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">
               Name:

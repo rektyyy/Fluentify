@@ -24,7 +24,7 @@ export default function SpeechToText({ setConversation, conversation }) {
   const [changedLanguage, setChangedLanguage] = useState(false);
 
   if (!browserSupportsSpeechRecognition) {
-    return <span>Your browser doesn't support speech recognition.</span>;
+    return <span>Your browser doesn&apos;t support speech recognition.</span>;
   }
   useEffect(() => {
     if (finalTranscript) {

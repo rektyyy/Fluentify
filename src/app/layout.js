@@ -23,30 +23,26 @@ export default function RootLayout({ children }) {
   const [userNotFound, setUserNotFound] = useState(false);
 
   useEffect(() => {
-    fetch("/api/userData", {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.status === 404) {
+    fetch("/api/userData")
+      .then((res) => {
+        if (res.status === 404) {
           setUserNotFound(true);
           return null;
         }
-        return response.json();
+        return res.json();
       })
       .then((data) => setUserData(data))
-      .catch((error) => console.error("Error:", error));
+      .catch(console.error);
   }, []);
 
   return (
     <UserContext.Provider
       value={{ userData, userNotFound, setUserData, setUserNotFound }}
     >
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+      <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+        <body className="min-h-screen bg-gray-100">
           <AppNavbar />
-          {children}
+          <main className="max-w-4xl mx-auto p-4">{children}</main>
         </body>
       </html>
     </UserContext.Provider>
