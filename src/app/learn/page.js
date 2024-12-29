@@ -83,6 +83,17 @@ export default function Page() {
     saveTreeData(updatedTreeData);
   }
 
+  function updateLessonCounter() {
+    fetch("/api/userData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...userData,
+        allLessons: userData.allLessons + 1,
+      }),
+    });
+  }
+
   const handleSubmit = (e) => {
     const addNewNode = (node, id, newNode) => {
       if (node.attributes.id === id) {
@@ -159,6 +170,7 @@ export default function Page() {
       );
       setTreeData(updatedTreeData);
       saveTreeData(updatedTreeData);
+      updateLessonCounter();
     }
 
     setShowForm(false);

@@ -20,6 +20,7 @@
     "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {
+    "daisyui": "^4.12.23",
     "eslint": "^8",
     "eslint-config-next": "14.2.22",
     "postcss": "^8.4.49",

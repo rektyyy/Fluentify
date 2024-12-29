@@ -22,10 +22,16 @@ export default function Home() {
         name: name,
         language: language,
         finished: 0,
+        allLessons: 0,
       }),
     });
     if (res.ok) {
-      setUserData({ name: name, language: language, finished: 0 });
+      setUserData({
+        name: name,
+        language: language,
+        finished: 0,
+        allLessons: 0,
+      });
       setUserNotFound(false);
     }
   }
@@ -91,6 +97,15 @@ export default function Home() {
       <h1 className="mb-3">Welcome, {userData.name}!</h1>
       <p className="fw-light">Your language: {userData.language[2]}</p>
       <p className="fw-light">Lessons finished: {userData.finished}</p>
+      {userData.allLessons === 0 ? (
+        <p className="text-warning">Please add a lesson to start learning</p>
+      ) : (
+        <progress
+          className="progress w-56"
+          value={userData.finished}
+          max={userData.allLessons}
+        ></progress>
+      )}
     </div>
   );
 }
