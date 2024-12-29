@@ -69,19 +69,19 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
   }, [generateRandomWords]);
 
   function handleClick(word) {
-    if (word === targetWord) {
-      setSolvedCount((prev) => prev + 1);
-      if (solvedCount + 1 === lessonData.attributes.words.length) {
-        setLessonCompleted(true);
-      }
-    } else {
+    if (word !== targetWord) {
       setSolvedCount(0);
     }
+
     setFeedback(word === targetWord ? "Correct!" : "Incorrect. Try again.");
   }
 
   function handleNext() {
     setFeedback("");
+    setSolvedCount((prev) => prev + 1);
+    if (solvedCount + 1 === lessonData.attributes.words.length) {
+      setLessonCompleted(true);
+    }
     const newLang = Math.random() < 0.5 ? "en" : "other";
     const newIndex = Math.floor(Math.random() * englishWordArray.length);
     setRandomLang(newLang);
