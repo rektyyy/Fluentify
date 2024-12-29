@@ -15,8 +15,19 @@ export default function AppNavbar() {
           method: "DELETE",
         });
 
-        const response = await fetch("/api/treeData", {
+        await fetch("/api/treeData", {
           method: "DELETE",
+        });
+        const response = await fetch("/api/treeData", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: "Lessons",
+            attributes: {
+              id: "root",
+            },
+            children: [],
+          }),
         });
 
         if (response.ok) {
