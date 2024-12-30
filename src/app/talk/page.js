@@ -21,7 +21,6 @@ export default function Page() {
 
   return (
     <div className="p-4">
-      <h2>Learn languages here!</h2>
       <ChatHistory conversation={conversation} />
       <SpeechToText
         setConversation={setConversation}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import localFont from "next/font/local";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AppNavbar from "./components/Navbar";
@@ -40,9 +41,9 @@ export default function RootLayout({ children }) {
       value={{ userData, userNotFound, setUserData, setUserNotFound }}
     >
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-        <body className="min-h-screen bg-gray-100">
+        <body className="min-h-screen bg-base-100 text-base-content">
           <AppNavbar />
-          <main className="max-w-4xl mx-auto p-4">{children}</main>
+          <main className="w-full p-4">{children}</main>
         </body>
       </html>
     </UserContext.Provider>

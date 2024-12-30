@@ -17,7 +17,8 @@
     "react-d3-tree": "^3.6.2",
     "react-dom": "^18",
     "react-speech-recognition": "^3.10.0",
-    "regenerator-runtime": "^0.14.1"
+    "regenerator-runtime": "^0.14.1",
+    "theme-change": "^2.5.0"
   },
   "devDependencies": {
     "daisyui": "^4.12.23",

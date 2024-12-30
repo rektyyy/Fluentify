@@ -54,29 +54,7 @@
           }
         ]
       },
-      "children": [
-        {
-          "name": "a",
-          "attributes": {
-            "id": "lesson7",
-            "description": "a",
-            "type": 1,
-            "finished": true,
-            "words": [
-              {
-                "en": "a",
-                "other": "a"
-              }
-            ]
-          },
-          "children": [],
-          "__rd3t": {
-            "id": "f864fc15-090a-4642-92e2-3e5b61197fa7",
-            "depth": 2,
-            "collapsed": false
-          }
-        }
-      ]
+      "children": []
     },
     {
       "name": "Lekcja 2",
@@ -303,10 +281,27 @@
               }
             ]
           },
-          "children": [],
+          "children": [
+            {
+              "name": "a",
+              "attributes": {
+                "id": "lesson7",
+                "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "type": 1,
+                "finished": false,
+                "words": [
+                  {
+                    "en": "a",
+                    "other": "a"
+                  }
+                ]
+              },
+              "children": []
+            }
+          ],
           "__rd3t": {
-            "id": "f864fc15-090a-4642-92e2-3e5b61197fa7",
-            "depth": 2,
+            "id": "a5f68229-7872-4b4c-8cd7-2b3d3f995246",
+            "depth": 3,
             "collapsed": false
           }
         }

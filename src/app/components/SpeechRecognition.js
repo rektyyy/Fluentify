@@ -5,7 +5,6 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { useState, useEffect } from "react";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
 import sendMessage from "../utils/GenerateBotResponse";
 import SelectLanguage from "./SelectLanguage";
 
@@ -95,23 +94,21 @@ export default function SpeechToText({ setConversation, conversation }) {
       />
       <div>Transcript: {transcript}</div>
       <div>Response: {botResponse}</div>
-      <InputGroup className="mb-3 mt-auto p-4">
-        <FormControl
-          placeholder="Type your message..."
-          value={transcript ? transcript : input}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
+      <div className="flex gap-2 items-center mt-4">
+        {/* Replace FormControl with a DaisyUI input */}
+        <input
+          type="text"
+          className="input input-bordered w-full"
+          placeholder="Type or say something..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
-        <Button
-          variant={listening ? "danger" : "primary"}
-          onClick={handleListening}
-        >
-          {listening ? "Stop" : "Voice"}
-        </Button>
-        <Button variant="success" onClick={() => handleSend(input)}>
+        {/* Replace Bootstrap Button with DaisyUI button */}
+        <button className="btn btn-primary" onClick={() => handleSend(input)}>
           Send
-        </Button>
-      </InputGroup>
+        </button>
+      </div>
+      {/* You can similarly style other elements with DaisyUI classes */}
     </div>
   );
 }

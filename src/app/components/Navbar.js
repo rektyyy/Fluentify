@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import UserContext from "./UserContext";
 import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 export default function AppNavbar() {
   const { userData } = useContext(UserContext);
@@ -40,12 +41,21 @@ export default function AppNavbar() {
   }
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-200">
       {/* Left side (brand) */}
       <div className="flex-1">
         <a href="/" className="btn btn-ghost text-xl">
           My app
         </a>
+        {/* Flag image if userData exists */}
+        {userData?.language?.[1] && (
+          <Image
+            src={`/flags/${userData.language[1]}.jpg`}
+            alt={`${userData.language[1]} flag`}
+            width={40}
+            height={25}
+          />
+        )}
       </div>
 
       {/* Right side (menu/links) */}
@@ -76,16 +86,10 @@ export default function AppNavbar() {
               <a href="/">Create profile</a>
             </li>
           )}
+          <li>
+            <ThemeToggle />
+          </li>
         </ul>
-        {/* Flag image if userData exists */}
-        {userData?.language?.[1] && (
-          <Image
-            src={`/flags/${userData.language[1]}.jpg`}
-            alt={`${userData.language[1]} flag`}
-            width={40}
-            height={25}
-          />
-        )}
       </div>
     </div>
   );

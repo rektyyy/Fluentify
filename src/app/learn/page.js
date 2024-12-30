@@ -322,25 +322,17 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full h-screen flex flex-col items-center">
       <LessonActions
         setIsEditing={setIsEditing}
         handleAddLesson={handleAddLesson}
         handleDeleteNode={handleDeleteNode}
         handleModifyLesson={handleModifyLesson}
+        showForm={showForm}
+        selectedNode={selectedNode}
+        handleViewLesson={handleViewLesson}
       />
-      {selectedNode && (
-        <div>
-          <p className="mt-2">Selected node: {selectedNode.name}</p>
-          <p>Description: {selectedNode.attributes.description}</p>
-          <button
-            onClick={handleViewLesson}
-            className="px-4 py-2 bg-green-500 text-white rounded"
-          >
-            Let's learn!
-          </button>
-        </div>
-      )}
+
       {showForm && (
         <LessonForm
           lessonName={lessonName}
@@ -358,11 +350,13 @@ export default function Page() {
           isEditing={isEditing}
         />
       )}
-      <LessonTree
-        treeData={treeData}
-        dimensions={dimensions}
-        handleNodeClick={handleNodeClick}
-      />
+      {!showForm && (
+        <LessonTree
+          treeData={treeData}
+          dimensions={dimensions}
+          handleNodeClick={handleNodeClick}
+        />
+      )}
     </div>
   );
 }
