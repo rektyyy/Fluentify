@@ -271,9 +271,9 @@
           "name": "a",
           "attributes": {
             "id": "lesson7",
-            "description": "a",
+            "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "type": 1,
-            "finished": true,
+            "finished": false,
             "words": [
               {
                 "en": "a",
@@ -281,26 +281,9 @@
               }
             ]
           },
-          "children": [
-            {
-              "name": "a",
-              "attributes": {
-                "id": "lesson7",
-                "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "type": 1,
-                "finished": false,
-                "words": [
-                  {
-                    "en": "a",
-                    "other": "a"
-                  }
-                ]
-              },
-              "children": []
-            }
-          ],
+          "children": [],
           "__rd3t": {
-            "id": "a5f68229-7872-4b4c-8cd7-2b3d3f995246",
+            "id": "9a16717c-f866-412b-87ae-ce71b63a71d8",
             "depth": 3,
             "collapsed": false
           }

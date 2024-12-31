@@ -322,7 +322,7 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col items-center">
+    <div className="h-max flex flex-col items-center">
       <LessonActions
         setIsEditing={setIsEditing}
         handleAddLesson={handleAddLesson}
@@ -351,11 +351,13 @@ export default function Page() {
         />
       )}
       {!showForm && (
-        <LessonTree
-          treeData={treeData}
-          dimensions={dimensions}
-          handleNodeClick={handleNodeClick}
-        />
+        <div className="w-full h-full">
+          <LessonTree
+            treeData={treeData}
+            dimensions={dimensions}
+            handleNodeClick={handleNodeClick}
+          />
+        </div>
       )}
     </div>
   );

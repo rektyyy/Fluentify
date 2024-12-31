@@ -12,9 +12,9 @@ const LessonActions = ({
   selectedNode,
   handleViewLesson,
 }) => (
-  <div className="flex items-center justify-between p-4 bg-base-200 rounded-lg shadow-md">
+  <div className="flex items-center justify-between pr-4 bg-base-200 rounded-lg shadow-md">
     {/* Left Side: Selected Node Information */}
-    <div className="flex items-center space-x-4 mr-10">
+    <div className="flex items-center  m-3">
       <div>
         <p className="text-base-content font-semibold">
           {selectedNode !== null ? selectedNode.name : ""}
