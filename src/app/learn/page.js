@@ -322,7 +322,7 @@ export default function Page() {
   }
 
   return (
-    <div className="h-max flex flex-col items-center">
+    <div className="flex flex-col items-center h-screen">
       <LessonActions
         setIsEditing={setIsEditing}
         handleAddLesson={handleAddLesson}
