@@ -26,6 +26,7 @@ export default function AppNavbar() {
             name: "Lessons",
             attributes: {
               id: "root",
+              description: "Add nodes to me!",
             },
             children: [],
           }),

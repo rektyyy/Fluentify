@@ -1,7 +1,8 @@
 {
   "name": "Lekcje",
   "attributes": {
-    "id": "root"
+    "id": "root",
+    "description": "Add nodes to me!"
   },
   "children": [
     {

@@ -31,7 +31,7 @@ const LessonActions = ({
         <button
           onClick={handleViewLesson}
           className={
-            selectedNode === null
+            selectedNode === null || selectedNode.attributes.id === "root"
               ? "btn btn-success space-x-2 btn-disabled"
               : "btn btn-success space-x-2"
           }
@@ -66,7 +66,7 @@ const LessonActions = ({
           <button
             onClick={() => handleModifyLesson(selectedNode)}
             className={
-              selectedNode === null
+              selectedNode === null || selectedNode.attributes.id === "root"
                 ? "btn btn-warning space-x-2 btn-disabled"
                 : "btn btn-warning space-x-2"
             }
@@ -91,7 +91,7 @@ const LessonActions = ({
           <button
             onClick={() => handleDeleteNode(selectedNode)}
             className={
-              selectedNode === null
+              selectedNode === null || selectedNode.attributes.id === "root"
                 ? "btn btn-error space-x-2 btn-disabled"
                 : "btn btn-error space-x-2"
             }
