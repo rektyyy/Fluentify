@@ -41,10 +41,13 @@ export default function RootLayout({ children }) {
       value={{ userData, userNotFound, setUserData, setUserNotFound }}
     >
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-        <body className="flex flex-col min-h-screen bg-base-100 text-base-content">
+        <body className="flex flex-col h-screen overflow-hidden bg-base-100 text-base-content">
           <AppNavbar />
 
-          <main className="flex-1 w-full p-4">{children}</main>
+          <main className="flex-1 flex flex-col overflow-hidden">
+            {/* Children will be the page-specific content */}
+            {children}
+          </main>
         </body>
       </html>
     </UserContext.Provider>

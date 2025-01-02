@@ -70,8 +70,8 @@ export default function SpeechToText({ setConversation, conversation }) {
   };
 
   return (
-    <div>
-      <div className="flex gap-2 items-center mt-4">
+    <div className="flex-none p-4 bg-base-200 overflow-hidden">
+      <div className="flex gap-2 items-center">
         <input
           type="text"
           className="input input-bordered w-full"
