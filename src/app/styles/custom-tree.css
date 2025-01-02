@@ -1,0 +1,5 @@
+/* More specific selector */
+svg path.custom-link {
+  stroke: currentColor;
+  stroke-width: 2;
+}

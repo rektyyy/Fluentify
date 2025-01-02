@@ -21,7 +21,7 @@ const LessonActions = ({
               {selectedNode.name}
             </p>
             <p className="text-sm text-base-content">
-              {truncateText(selectedNode.attributes.description, 60)}
+              {truncateText(selectedNode.attributes.description, 50)}
             </p>
           </div>
         </div>
