@@ -273,7 +273,7 @@
             "id": "lesson7",
             "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "type": 1,
-            "finished": false,
+            "finished": true,
             "words": [
               {
                 "en": "a",
@@ -283,8 +283,8 @@
           },
           "children": [],
           "__rd3t": {
-            "id": "9a16717c-f866-412b-87ae-ce71b63a71d8",
-            "depth": 3,
+            "id": "4fe085d2-69a5-4dfa-a2e7-106c630ebdb4",
+            "depth": 2,
             "collapsed": false
           }
         }

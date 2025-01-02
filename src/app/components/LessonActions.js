@@ -14,21 +14,19 @@ const LessonActions = ({
 }) => (
   <div className="flex flex-col bg-base-200 rounded-lg shadow-md">
     <div className="flex items-center justify-between">
-      {/* Left Side: Selected Node Information */}
-      <div className="flex items-center pl-4 ">
-        <div>
-          <p className="text-base-content font-semibold">
-            {selectedNode !== null ? selectedNode.name : ""}
-          </p>
-          <p className="text-sm text-base-content">
-            {truncateText(
-              selectedNode !== null ? selectedNode.attributes.description : "",
-              60
-            )}
-          </p>
+      {selectedNode !== null && (
+        <div className="flex items-center pl-4">
+          <div>
+            <p className="text-base-content font-semibold">
+              {selectedNode.name}
+            </p>
+            <p className="text-sm text-base-content">
+              {truncateText(selectedNode.attributes.description, 60)}
+            </p>
+          </div>
         </div>
-      </div>
-      {/* Right Side: Action Buttons */}
+      )}
+
       <div className="flex items-center space-x-2 m-3">
         <button
           onClick={handleViewLesson}

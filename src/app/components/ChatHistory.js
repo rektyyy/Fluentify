@@ -1,25 +1,17 @@
-import { Container, Row, Col, Card } from "react-bootstrap";
-
 export default function ChatHistory({ conversation }) {
-  const containerStyle = {
-    maxHeight: "90vh",
-    overflowY: "auto",
-  };
   return (
-    <Container style={containerStyle}>
+    <div className="h-[90vh] overflow-y-auto p-4">
       {conversation.slice(1).map((item, index) => (
-        <Row key={index} className="mb-3">
-          <Col>
-            <Card>
-              <Card.Body>
-                <Card.Text>
-                  <strong>{item.role}:</strong> {item.content}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        <div key={index} className="mb-3">
+          <div className="card bg-base-100 shadow-md">
+            <div className="card-body">
+              <p>
+                <strong>{item.role}:</strong> {item.content}
+              </p>
+            </div>
+          </div>
+        </div>
       ))}
-    </Container>
+    </div>
   );
 }
