@@ -42,20 +42,18 @@ export default function LessonForm({
         <textarea
           value={lessonDescription}
           onChange={(e) => setLessonDescription(e.target.value)}
-          className="textarea textarea-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-300"
+          className="textarea textarea-bordered w-full text-base-content"
           rows="4"
           placeholder="Enter lesson description..."
         ></textarea>
 
         <label className="label">
-          <span className="label-text text-base-content dark:text-base-300">
-            Lesson Type:
-          </span>
+          <span className="label-text text-base-content">Lesson Type:</span>
         </label>
         <select
           value={lessonType}
           onChange={(e) => setLessonType(e.target.value)}
-          className="select select-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-300"
+          className="select select-bordered w-full text-base-content"
           required
         >
           <option disabled value="">
@@ -68,20 +66,18 @@ export default function LessonForm({
         </select>
 
         <label className="label">
-          <span className="label-text text-base-content dark:text-base-300">
-            English Word:
-          </span>
+          <span className="label-text text-base-content">English Word:</span>
         </label>
         <input
           type="text"
           value={englishWord}
           onChange={(e) => setEnglishWord(e.target.value)}
-          className="input input-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-300"
+          className="input input-bordered w-full text-base-content"
           required
         />
 
         <label className="label">
-          <span className="label-text text-base-content dark:text-base-300">
+          <span className="label-text text-base-content">
             Other Language Word:
           </span>
         </label>
@@ -89,7 +85,7 @@ export default function LessonForm({
           type="text"
           value={otherLanguageWord}
           onChange={(e) => setOtherLanguageWord(e.target.value)}
-          className="input input-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-300"
+          className="input input-bordered w-full text-base-content"
           required
         />
 

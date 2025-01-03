@@ -10,18 +10,23 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
     () => lessonData.attributes.words.map((word) => word.en),
     [lessonData]
   );
+
   const otherWordArray = useMemo(
     () => lessonData.attributes.words.map((word) => word.other),
     [lessonData]
   );
 
+  // Pick a random language for the target word
   const [randomLang, setRandomLang] = useState(() =>
     Math.random() < 0.5 ? "other" : "en"
   );
+
+  // Pick a random index for the target word
   const [targetIndex, setTargetIndex] = useState(() =>
     Math.floor(Math.random() * englishWordArray.length)
   );
 
+  // Identify the target word and its translation
   const targetWord =
     randomLang === "en"
       ? englishWordArray[targetIndex]
@@ -32,121 +37,181 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
       ? otherWordArray[targetIndex]
       : englishWordArray[targetIndex];
 
+  // Generate random answer choices
   const generateRandomWords = useCallback(() => {
+    const wordsSource = randomLang === "en" ? otherWordArray : englishWordArray;
     const correctWord =
       randomLang === "en"
-        ? englishWordArray[targetIndex]
-        : otherWordArray[targetIndex];
+        ? otherWordArray[targetIndex]
+        : englishWordArray[targetIndex];
 
-    // Build a list of all indexes except the correct one
-    let availableIndexes = [...Array(englishWordArray.length).keys()].filter(
-      (i) => i !== targetIndex
-    );
+    // Take random unique words from the source array
+    const shuffled = [...wordsSource]
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
 
-    // Pick 3 unique random indexes
-    const wrongWords = [];
-    for (let i = 0; i < 3; i++) {
-      if (availableIndexes.length === 0) break; // Prevent infinite loop
-      const randIdx = Math.floor(Math.random() * availableIndexes.length);
-      wrongWords.push(
-        randomLang === "en"
-          ? otherWordArray[availableIndexes[randIdx]]
-          : englishWordArray[availableIndexes[randIdx]]
-      );
-      availableIndexes.splice(randIdx, 1); // Remove selected index
+    // Ensure correct word is included
+    if (!shuffled.includes(correctWord)) {
+      shuffled.pop();
+      shuffled.push(correctWord);
     }
 
-    // Combine correct word with wrong words and shuffle
-    const options = [...wrongWords, correctWord].sort(
-      () => 0.5 - Math.random()
-    );
-    return options;
-  }, [randomLang, targetIndex, englishWordArray, otherWordArray]);
+    // Shuffle final array
+    shuffled.sort(() => 0.5 - Math.random());
+    setRandomWords(shuffled);
+  }, [englishWordArray, otherWordArray, targetIndex, randomLang]);
 
+  // On component mount / target changes, generate new random words
   useEffect(() => {
-    const options = generateRandomWords();
-    setRandomWords(options);
-  }, [generateRandomWords]);
-
-  function handleClick(word) {
-    if (word !== targetWord) {
-      setSolvedCount(0);
+    if (englishWordArray.length > 0 && !lessonCompleted) {
+      generateRandomWords();
     }
+  }, [englishWordArray.length, generateRandomWords, lessonCompleted]);
 
-    setFeedback(word === targetWord ? "Correct!" : "Incorrect. Try again.");
-  }
+  // Guess handler
+  const handleGuess = (guess) => {
+    const isCorrect = guess === targetTranslation;
+    setFeedback(isCorrect ? "Correct!" : "Incorrect!");
+    if (isCorrect) {
+      setSolvedCount((prev) => prev + 1);
+    }
+  };
 
-  function handleNext() {
-    setFeedback("");
-    setSolvedCount((prev) => prev + 1);
-    if (solvedCount + 1 === lessonData.attributes.words.length) {
+  // Handle next attempt or finish
+  const handleNext = () => {
+    if (solvedCount >= lessonData.attributes.words.length) {
       setLessonCompleted(true);
+      return;
     }
-    const newLang = Math.random() < 0.5 ? "en" : "other";
-    const newIndex = Math.floor(Math.random() * englishWordArray.length);
-    setRandomLang(newLang);
-    setTargetIndex(newIndex);
-  }
-  function handleWin() {
+    // Reset for new round
+    setFeedback("");
+    setRandomLang(Math.random() < 0.5 ? "other" : "en");
+    setTargetIndex(Math.floor(Math.random() * englishWordArray.length));
+  };
+
+  const handleWin = () => {
     finishLesson();
     onBack();
-  }
-  if (lessonCompleted) {
-    return (
-      <div className="p-4 max-w-md mx-auto bg-slate-100 rounded-lg shadow-md text-center">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">
-          Congratulations! You&apos;ve completed the lesson.
-        </h3>
-        <button
-          onClick={handleWin}
-          className="block mx-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 
-                   text-white rounded-lg transition-colors duration-200 
-                   shadow-md hover:shadow-lg"
-        >
-          Back
-        </button>
-      </div>
-    );
-  }
+  };
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-slate-100 rounded-lg shadow-md">
-      <h3 className="text-lg font-semibold mb-4 text-gray-800">
-        Translate this word:
-      </h3>
-      <p className="mb-6 text-center text-2xl font-bold text-indigo-600">
-        {targetTranslation}
-      </p>
-      <div className="flex flex-wrap gap-4 justify-center mb-6">
-        {randomWords.map((word, index) => (
-          <button
-            key={index}
-            onClick={() => handleClick(word)}
-            className="px-6 py-3 rounded-lg bg-white hover:bg-indigo-50 border border-gray-200 
-                     shadow-sm transition-colors duration-200 text-gray-700 hover:text-indigo-600"
-          >
-            {word}
-          </button>
-        ))}
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-base-100">
+      <div className="card w-full max-w-xl shadow-xl bg-base-200">
+        <div className="card-body">
+          <div className="flex justify-between items-center">
+            <h2 className="card-title text-center mb-2 text-base-content">
+              Match the Meaning
+            </h2>
+            <button
+              className="btn btn-ghost text-base-content"
+              onClick={() => document.getElementById("my_modal_2").showModal()}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </button>
+
+            <dialog
+              id="my_modal_2"
+              className="modal bg-base-100 text-base-content"
+            >
+              <form method="dialog" className="modal-box">
+                <h3 className="font-bold text-lg">Match the Meaning</h3>
+                <p className="py-4"></p>
+                This lesson helps you practice matching words between English
+                and another language. You will be presented with a word in one
+                language, and you need to select the correct translation from a
+                list of options. Each correct answer will be counted, and you
+                will receive feedback on your choice. The lesson is completed
+                once you have correctly guessed the amount of the words in the
+                lesson in a row.
+                <div className="modal-action">
+                  <button className="btn btn-primary">Close</button>
+                </div>
+              </form>
+              <form
+                method="dialog"
+                className="modal-backdrop bg-base-300 bg-opacity-50"
+              >
+                <button>close</button>
+              </form>
+            </dialog>
+          </div>
+          {/* Target word */}
+          <div className="text-center text-2xl font-bold text-primary mb-4">
+            {targetWord}
+          </div>
+          {/* Answer choices */}
+          <div className="flex flex-col gap-2 items-center">
+            {randomWords.map((word, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleGuess(word)}
+                className={`btn w-full md:w-2/3 text-base-content ${
+                  feedback && word === targetTranslation
+                    ? "btn-success"
+                    : feedback && word !== targetTranslation
+                    ? "btn-error"
+                    : "btn-ghost"
+                }`}
+              >
+                {word}
+              </button>
+            ))}
+          </div>
+          {/* Actions */}
+          <div className="divider my-4"></div>
+          <div className="card-actions items-center w-full">
+            <div className="ml-auto space-x-3">
+              <button onClick={onBack} className="btn btn-ghost">
+                Back
+              </button>
+              {!lessonCompleted && (
+                <button onClick={handleNext} className="btn btn-primary">
+                  Next
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-      {feedback && (
-        <p
-          className={`text-center font-bold mb-4 text-lg ${
-            feedback === "Correct!" ? "text-green-600" : "text-red-600"
-          }`}
-        >
-          {feedback}
-        </p>
-      )}
-      {feedback === "Correct!" && (
-        <button
-          onClick={handleNext}
-          className="block mx-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 
-                   text-white rounded-lg transition-colors duration-200 
-                   shadow-md hover:shadow-lg"
-        >
-          Next
-        </button>
+
+      {lessonCompleted && (
+        <div className="mt-6 w-full max-w-xl">
+          <div className="alert alert-success flex justify-between items-center p-4 rounded-lg shadow-lg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span className="text-lg font-semibold">
+              Great job! You've completed this lesson!
+            </span>
+            <button onClick={handleWin} className="btn btn-sm btn-success">
+              Continue
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

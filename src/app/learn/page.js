@@ -151,7 +151,7 @@ export default function Page() {
       const newLesson = {
         name: lessonName,
         attributes: {
-          id: `lesson${treeDataCopy.children.length + 1}`,
+          id: `lesson${Math.floor(Math.random() * 1000000)}`,
           description: lessonDescription,
           type: lessonType,
           finished: false,
@@ -203,26 +203,33 @@ export default function Page() {
 
   const handleDeleteNode = () => {
     const deleteNodeById = (node, id) => {
-      if (!node.children || node.children.length === 0) return node;
+      if (!node?.children?.length) return node;
 
       for (let i = 0; i < node.children.length; i++) {
         if (node.children[i].attributes.id === id) {
           const leftoverChildren = node.children[i].children;
-          //usuwanie z tablicy
+
+          // Remove the matched child
           node.children.splice(i, 1);
-          node.children = node.children.concat(leftoverChildren);
+
+          // Merge leftoverChildren into node.children
+          leftoverChildren.forEach((child) => {
+            node.children.push(child);
+          });
+
+          // Return updated node immediately
           return node;
-        }
-        const result = deleteNodeById(node.children[i], id);
-        if (result) {
-          return node;
+        } else {
+          // Recursively update the subtree
+          const updatedChild = deleteNodeById(node.children[i], id);
+          node.children[i] = updatedChild;
         }
       }
       return node;
     };
 
     if (!selectedNode) {
-      alert("You didn't select any lesson to delete!");
+      alert("No lesson selected to delete!");
       return;
     }
 
@@ -231,21 +238,13 @@ export default function Page() {
       return;
     }
 
-    if (
-      confirm(
-        `Are you sure you want to delete this lesson: "${selectedNode.name}"?`
-      )
-    ) {
-      const treeDataCopy = JSON.parse(JSON.stringify(treeData));
-      const updatedTreeData = deleteNodeById(
-        treeDataCopy,
-        selectedNode.attributes.id
-      );
-      console.log(updatedTreeData);
-      setTreeData(updatedTreeData);
+    if (confirm(`Are you sure you want to delete "${selectedNode.name}"?`)) {
+      // Clone your tree
+      const treeCopy = JSON.parse(JSON.stringify(treeData));
+      const updated = deleteNodeById(treeCopy, selectedNode.attributes.id);
+      setTreeData(updated);
+      saveTreeData(updated);
       setSelectedNode(null);
-
-      saveTreeData(updatedTreeData);
     }
   };
 
