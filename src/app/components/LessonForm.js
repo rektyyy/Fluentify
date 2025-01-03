@@ -13,6 +13,28 @@ export default function LessonForm({
   handleCancelChanges,
   isEditing,
 }) {
+  const inputInfo = (
+    <button
+      className="btn btn-sm btn-ghost text-base-content"
+      onClick={() => document.getElementById("my_modal_2").showModal()}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+    </button>
+  );
   return (
     <div className="flex justify-center mt-8">
       <form
@@ -65,8 +87,9 @@ export default function LessonForm({
           <option value="4">Write Sentence</option>
         </select>
 
-        <label className="label">
+        <label className="label flex justify-between">
           <span className="label-text text-base-content">English Word:</span>
+          {inputInfo}
         </label>
         <input
           type="text"
@@ -76,10 +99,11 @@ export default function LessonForm({
           required
         />
 
-        <label className="label">
+        <label className="label flex justify-between">
           <span className="label-text text-base-content">
             Other Language Word:
           </span>
+          {inputInfo}
         </label>
         <input
           type="text"
@@ -102,6 +126,26 @@ export default function LessonForm({
           </button>
         </div>
       </form>
+      <dialog id="my_modal_2" className="modal bg-base-100 text-base-content">
+        <form method="dialog" className="modal-box">
+          <h3 className="font-bold text-lg">How to input words?</h3>
+          <p className="py-4"></p>
+          <p className="py-4">
+            To input words correctly, you need to separate each word with a
+            comma. Example:
+            <span className="font-bold"> word1, word2, word3</span>
+          </p>
+          <div className="modal-action">
+            <button className="btn btn-primary">Close</button>
+          </div>
+        </form>
+        <form
+          method="dialog"
+          className="modal-backdrop bg-base-300 bg-opacity-50"
+        >
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 }
