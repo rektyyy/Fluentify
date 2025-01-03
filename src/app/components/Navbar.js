@@ -72,10 +72,7 @@ export default function AppNavbar() {
           <li tabIndex={0}>
             <details>
               <summary>{userData.name}</summary>
-              <ul className="bg-base-100 rounded-t-none p-2">
-                <li>
-                  <a href="/">Change profile</a>
-                </li>
+              <ul className="bg-base-200 rounded-t-none p-2">
                 <li>
                   <a onClick={handleDelete}>Delete data</a>
                 </li>

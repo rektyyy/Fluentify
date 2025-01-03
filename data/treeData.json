@@ -282,7 +282,45 @@
               }
             ]
           },
-          "children": [],
+          "children": [
+            {
+              "name": "b",
+              "attributes": {
+                "id": "lesson743486",
+                "description": "b",
+                "type": 1,
+                "finished": true,
+                "words": [
+                  {
+                    "en": "b",
+                    "other": "b"
+                  }
+                ]
+              },
+              "children": [],
+              "__rd3t": {
+                "id": "69444542-4e01-4750-83d3-cc2ab6712d09",
+                "depth": 3,
+                "collapsed": false
+              }
+            },
+            {
+              "name": "b",
+              "attributes": {
+                "id": "lesson893744",
+                "description": "b",
+                "type": 1,
+                "finished": false,
+                "words": [
+                  {
+                    "en": "b",
+                    "other": "b"
+                  }
+                ]
+              },
+              "children": []
+            }
+          ],
           "__rd3t": {
             "id": "5d71b799-6ff1-484f-acd9-30fd3f4839f9",
             "depth": 2,

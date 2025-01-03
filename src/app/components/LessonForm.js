@@ -13,7 +13,7 @@ export default function LessonForm({
   handleCancelChanges,
   isEditing,
 }) {
-  const inputInfo = (
+  const InfoButton = () => (
     <button
       className="btn btn-sm btn-ghost text-base-content"
       onClick={() => document.getElementById("my_modal_2").showModal()}
@@ -87,29 +87,35 @@ export default function LessonForm({
           <option value="4">Write Sentence</option>
         </select>
 
-        <label className="label flex justify-between">
-          <span className="label-text text-base-content">English Word:</span>
-          {inputInfo}
-        </label>
-        <input
-          type="text"
-          value={englishWord}
-          onChange={(e) => setEnglishWord(e.target.value)}
-          className="input input-bordered w-full text-base-content"
-          required
-        />
+        <div className="form-group mb-4">
+          <label className="label cursor-text justify-between items-center">
+            <span className="label-text text-base-content pointer-events-none">
+              English Word:
+            </span>
+            <div className="flex-none">
+              <InfoButton />
+            </div>
+          </label>
+          <input
+            type="text"
+            value={englishWord}
+            onChange={(e) => setEnglishWord(e.target.value)}
+            className="input input-bordered w-full text-base-content"
+            required
+          />
+        </div>
 
-        <label className="label flex justify-between">
+        <label className="label">
           <span className="label-text text-base-content">
             Other Language Word:
           </span>
-          {inputInfo}
+          <InfoButton />
         </label>
         <input
           type="text"
           value={otherLanguageWord}
           onChange={(e) => setOtherLanguageWord(e.target.value)}
-          className="input input-bordered w-full text-base-content"
+          className="input input-bordered w-full text-base-content mb-4"
           required
         />
 
