@@ -1,3 +1,5 @@
+import generateLessonWords from "../utils/generateLesson";
+import { useState } from "react";
 export default function LessonForm({
   lessonName,
   lessonDescription,
@@ -12,11 +14,15 @@ export default function LessonForm({
   handleSubmit,
   handleCancelChanges,
   isEditing,
+  language,
 }) {
-  const InfoButton = () => (
+  const [isLoading, setIsLoading] = useState(false);
+
+  const InfoButton = ({ modalId }) => (
     <button
-      className="btn btn-sm btn-ghost text-base-content"
-      onClick={() => document.getElementById("my_modal_2").showModal()}
+      type="button"
+      className="btn btn-ghost btn-circle"
+      onClick={() => document.getElementById(modalId).showModal()}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -35,30 +41,52 @@ export default function LessonForm({
       </svg>
     </button>
   );
+
+  async function handleGenerateWords(language) {
+    try {
+      setIsLoading(true);
+      const lessonWords = await generateLessonWords(
+        lessonName,
+        lessonDescription,
+        language
+      );
+      const englishWords = lessonWords.words.map((word) => word.en).join(",");
+      const otherWords = lessonWords.words.map((word) => word.other).join(",");
+      setEnglishWord(englishWords);
+      setOtherLanguageWord(otherWords);
+      console.log("Generated Lesson Words:", lessonWords);
+    } catch (error) {
+      console.error("Error generating words:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <div className="flex justify-center mt-8">
+    <div className="flex justify-center mt-8 w-1/3 px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg p-6 bg-base-200 rounded-lg shadow-md"
+        className="w-full  p-8 bg-base-200 rounded-lg shadow-md"
       >
         <h2 className="text-2xl font-bold mb-6 text-base-content ">
           {isEditing ? "Edit Lesson" : "Add New Lesson"}
         </h2>
 
         <label className="label">
-          <span className="label-text text-base-content">Lesson Name:</span>
+          <span className="label-text text-base-content">Lesson name:</span>
         </label>
         <input
           type="text"
           value={lessonName}
           onChange={(e) => setLessonName(e.target.value)}
           className="input input-bordered w-full text-base-content"
+          placeholder="Enter lesson name..."
           required
         />
 
         <label className="label">
           <span className="label-text text-base-content">
-            Lesson Description:
+            Lesson description:
           </span>
         </label>
         <textarea
@@ -67,10 +95,11 @@ export default function LessonForm({
           className="textarea textarea-bordered w-full text-base-content"
           rows="4"
           placeholder="Enter lesson description..."
+          required
         ></textarea>
 
         <label className="label">
-          <span className="label-text text-base-content">Lesson Type:</span>
+          <span className="label-text text-base-content">Lesson type:</span>
         </label>
         <select
           value={lessonType}
@@ -82,18 +111,30 @@ export default function LessonForm({
             Select lesson type
           </option>
           <option value="1">Translation</option>
-          <option value="2">Select Correct Word</option>
-          <option value="3">Fill Sentence</option>
-          <option value="4">Write Sentence</option>
+          <option value="2">Select correct word</option>
+          <option value="3">Fill sentence</option>
+          <option value="4">Write sentence</option>
         </select>
 
-        <div className="form-group mb-4">
+        <div className="flex gap-2 items-center mt-4">
+          <button
+            type="button"
+            className="btn btn-primary flex-1"
+            onClick={handleGenerateWords}
+            disabled={isLoading}
+          >
+            {isLoading ? "Generating..." : "Generate Words"}
+          </button>
+
+          <InfoButton modalId="generate_info_modal" />
+        </div>
+        <div className="form-group">
           <label className="label cursor-text justify-between items-center">
             <span className="label-text text-base-content pointer-events-none">
-              English Word:
+              English words:
             </span>
             <div className="flex-none">
-              <InfoButton />
+              <InfoButton modalId="english_words_modal" />
             </div>
           </label>
           <input
@@ -107,9 +148,9 @@ export default function LessonForm({
 
         <label className="label">
           <span className="label-text text-base-content">
-            Other Language Word:
+            Other language words:
           </span>
-          <InfoButton />
+          <InfoButton modalId="other_words_modal" />
         </label>
         <input
           type="text"
@@ -119,7 +160,7 @@ export default function LessonForm({
           required
         />
 
-        <div className="flex space-x-4 mt-4">
+        <div className="flex space-x-4">
           <button type="submit" className="btn btn-success flex-1">
             {isEditing ? "Save Changes" : "Add Lesson"}
           </button>
@@ -132,25 +173,60 @@ export default function LessonForm({
           </button>
         </div>
       </form>
-      <dialog id="my_modal_2" className="modal bg-base-100 text-base-content">
-        <form method="dialog" className="modal-box">
-          <h3 className="font-bold text-lg">How to input words?</h3>
-          <p className="py-4"></p>
+      <dialog id="generate_info_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">About word generation</h3>
           <p className="py-4">
-            To input words correctly, you need to separate each word with a
-            comma. Example:
-            <span className="font-bold"> word1, word2, word3</span>
+            This feature uses AI to automatically generate word pairs based on
+            your lesson name and description. The AI will create relevant
+            vocabulary pairs in English and your target language.
+            <br />
+            For best results:
+          </p>
+
+          <ul className="list-disc list-inside">
+            <li>Provide a clear lesson name</li>
+            <li>Add a detailed description</li>
+            <li>Check generated words for accuracy</li>
+          </ul>
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog id="english_words_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">English words</h3>
+          <p className="py-4">
+            Enter English words separated by commas. These will be used as the
+            source words for translation. <br />
+            <strong>Example: word1,word2,word3</strong>
           </p>
           <div className="modal-action">
-            <button className="btn btn-primary">Close</button>
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
           </div>
-        </form>
-        <form
-          method="dialog"
-          className="modal-backdrop bg-base-300 bg-opacity-50"
-        >
-          <button>close</button>
-        </form>
+        </div>
+      </dialog>
+
+      <dialog id="other_words_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Other language words</h3>
+          <p className="py-4">
+            Enter translated words separated by commas. These should match the
+            order of English words entered above. <br />
+            <strong>Example: word1,word2,word3</strong>
+          </p>
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
       </dialog>
     </div>
   );

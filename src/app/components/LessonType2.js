@@ -5,7 +5,7 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
   const [feedback, setFeedback] = useState("");
   const [solvedCount, setSolvedCount] = useState(0);
   const [lessonCompleted, setLessonCompleted] = useState(false);
-
+  const [selectedGuess, setSelectedGuess] = useState(null);
   const englishWordArray = useMemo(
     () => lessonData.attributes.words.map((word) => word.en),
     [lessonData]
@@ -69,8 +69,9 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
   }, [englishWordArray.length, generateRandomWords, lessonCompleted]);
 
   // Guess handler
-  const handleGuess = (guess) => {
-    const isCorrect = guess === targetTranslation;
+  const handleGuess = (word) => {
+    setSelectedGuess(word);
+    const isCorrect = word === targetTranslation;
     setFeedback(isCorrect ? "Correct!" : "Incorrect!");
     if (isCorrect) {
       setSolvedCount((prev) => prev + 1);
@@ -84,6 +85,7 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
       return;
     }
     // Reset for new round
+    setSelectedGuess(null);
     setFeedback("");
     setRandomLang(Math.random() < 0.5 ? "other" : "en");
     setTargetIndex(Math.floor(Math.random() * englishWordArray.length));
@@ -100,7 +102,7 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
         <div className="card-body">
           <div className="flex justify-between items-center">
             <h2 className="card-title text-center mb-2 text-base-content">
-              Match the Meaning
+              Match the meaning
             </h2>
             <button
               className="btn btn-ghost text-base-content"
@@ -159,13 +161,14 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
               <button
                 key={idx}
                 onClick={() => handleGuess(word)}
-                className={`btn w-full md:w-2/3 text-base-content ${
-                  feedback && word === targetTranslation
-                    ? "btn-success"
-                    : feedback && word !== targetTranslation
-                    ? "btn-error"
-                    : "btn-ghost"
+                className={`btn w-full md:w-2/3 text-base-content btn-ghost ${
+                  selectedGuess === word
+                    ? word === targetTranslation
+                      ? "outline outline-2 outline-success"
+                      : "outline outline-2 outline-error"
+                    : ""
                 }`}
+                disabled={selectedGuess !== null}
               >
                 {word}
               </button>

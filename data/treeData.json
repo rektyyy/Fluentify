@@ -297,9 +297,63 @@
                   }
                 ]
               },
-              "children": [],
+              "children": [
+                {
+                  "name": "Cars",
+                  "attributes": {
+                    "id": "lesson322524",
+                    "description": "Lesson about different car parts",
+                    "type": "2",
+                    "finished": true,
+                    "words": [
+                      {
+                        "en": "car",
+                        "other": "voz"
+                      },
+                      {
+                        "en": "wheel",
+                        "other": "roda"
+                      },
+                      {
+                        "en": "engine",
+                        "other": "motor"
+                      },
+                      {
+                        "en": "brake",
+                        "other": "freio"
+                      },
+                      {
+                        "en": "gearbox",
+                        "other": "caixa de velocidades"
+                      },
+                      {
+                        "en": "steering wheel",
+                        "other": "volante"
+                      },
+                      {
+                        "en": "seat",
+                        "other": "assento"
+                      },
+                      {
+                        "en": "mirror",
+                        "other": "espelho retrovisor"
+                      },
+                      {
+                        "en": "horn",
+                        "other": "sirene"
+                      }
+                    ]
+                  },
+                  "children": [],
+                  "__rd3t": {
+                    "id": "af36019c-b92e-486c-8e36-875645676cc3",
+                    "depth": 4,
+                    "collapsed": false
+                  }
+                }
+              ],
               "__rd3t": {
-                "id": "69444542-4e01-4750-83d3-cc2ab6712d09",
+                "id": "80d52dc4-483e-476b-ba8c-083573ef9267",
                 "depth": 3,
                 "collapsed": false
               }
@@ -318,11 +372,16 @@
                   }
                 ]
               },
-              "children": []
+              "children": [],
+              "__rd3t": {
+                "id": "59f1a957-92be-4f7b-91cf-c057731312e5",
+                "depth": 3,
+                "collapsed": false
+              }
             }
           ],
           "__rd3t": {
-            "id": "5d71b799-6ff1-484f-acd9-30fd3f4839f9",
+            "id": "32d7ccb6-41e4-4374-b5da-7c1a17f1175a",
             "depth": 2,
             "collapsed": false
           }

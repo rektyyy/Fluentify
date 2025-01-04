@@ -323,11 +323,9 @@ export default function Page() {
   return (
     <div className="flex flex-col items-center h-screen p-4">
       <LessonActions
-        setIsEditing={setIsEditing}
         handleAddLesson={handleAddLesson}
         handleDeleteNode={handleDeleteNode}
         handleModifyLesson={handleModifyLesson}
-        showForm={showForm}
         selectedNode={selectedNode}
         handleViewLesson={handleViewLesson}
       />
@@ -347,6 +345,7 @@ export default function Page() {
           handleSubmit={handleSubmit}
           handleCancelChanges={handleCancelChanges}
           isEditing={isEditing}
+          language={userData.language[0]}
         />
       )}
       {!showForm && (
