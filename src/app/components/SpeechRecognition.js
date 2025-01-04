@@ -8,7 +8,11 @@ import { useState, useEffect, useContext } from "react";
 import UserContext from "./UserContext";
 import sendMessage from "../utils/GenerateBotResponse";
 
-export default function SpeechToText({ setConversation, conversation }) {
+export default function SpeechToText({
+  setConversation,
+  conversation,
+  language,
+}) {
   const {
     transcript,
     finalTranscript,
@@ -23,12 +27,15 @@ export default function SpeechToText({ setConversation, conversation }) {
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn&apos;t support speech recognition.</span>;
   }
-  if (finalTranscript) {
-    setInput(finalTranscript);
-    handleSend(finalTranscript);
-  }
-
-  const handleSend = async (message) => {
+  useEffect(() => {
+    if (finalTranscript) {
+      handleSend(finalTranscript);
+      resetTranscript();
+    } else {
+      setInput(transcript);
+    }
+  }, [finalTranscript, transcript]);
+  async function handleSend(message) {
     if (!message) return;
     console.log("SENDING MESSAGE: " + message);
     try {
@@ -44,7 +51,7 @@ export default function SpeechToText({ setConversation, conversation }) {
     }
     setInput("");
     resetTranscript();
-  };
+  }
 
   const handleListening = () => {
     if (!listening) {
