@@ -36,7 +36,7 @@ const LessonActions = ({
               : "btn btn-success space-x-2"
           }
         >
-          Let's Learn!
+          Let&apos;s Learn!
         </button>
         <button
           onClick={handleAddLesson}

@@ -18,18 +18,15 @@ export default function SpeechToText({ setConversation, conversation }) {
   } = useSpeechRecognition();
 
   const { userData } = useContext(UserContext);
-  const [botResponse, setBotResponse] = useState();
   const [input, setInput] = useState("");
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn&apos;t support speech recognition.</span>;
   }
-  useEffect(() => {
-    if (finalTranscript) {
-      setInput(finalTranscript);
-      handleSend(finalTranscript);
-    }
-  }, [finalTranscript]);
+  if (finalTranscript) {
+    setInput(finalTranscript);
+    handleSend(finalTranscript);
+  }
 
   const handleSend = async (message) => {
     if (!message) return;
@@ -37,7 +34,6 @@ export default function SpeechToText({ setConversation, conversation }) {
     try {
       const response = await sendMessage(
         message,
-        setBotResponse,
         setConversation,
         conversation,
         userData.language[1]

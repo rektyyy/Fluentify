@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
 import "../styles/custom-tree.css";
 const Tree = dynamic(() => import("react-d3-tree"), { ssr: false });
 

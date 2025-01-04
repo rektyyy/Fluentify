@@ -1,4 +1,4 @@
-import generateLessonWords from "../utils/generateLesson";
+import generateLessonWords from "../utils/GenerateLesson";
 import { useState } from "react";
 export default function LessonForm({
   lessonName,

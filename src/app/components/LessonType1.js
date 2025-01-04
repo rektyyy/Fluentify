@@ -87,9 +87,9 @@ export default function LessonType1({ lessonData, onBack, finishLesson }) {
               <p className="py-4">
                 Fill in the missing translations. Words will appear in random
                 order - either in English or another language. After completing
-                all translations, click "Check Answers" to verify your work. If
-                all answers are correct, you'll see a success message and can
-                continue to the next lesson.
+                all translations, click &quot;Check answers&quot; to verify your
+                work. If all answers are correct, you&apos;ll see a success
+                message and can continue to the next lesson.
               </p>
               <div className="modal-action">
                 <button className="btn btn-primary">Close</button>
@@ -170,7 +170,7 @@ export default function LessonType1({ lessonData, onBack, finishLesson }) {
             Back
           </button>
           <button onClick={checkAnswers} className="btn btn-primary">
-            Check Answers
+            Check answers
           </button>
         </div>
       </div>
@@ -193,7 +193,7 @@ export default function LessonType1({ lessonData, onBack, finishLesson }) {
               />
             </svg>
             <span className="text-lg font-semibold">
-              Great job! You've completed this lesson!
+              Great job! You&apos;ve completed this lesson!
             </span>
             <button onClick={handleWin} className="btn btn-sm btn-success">
               Continue

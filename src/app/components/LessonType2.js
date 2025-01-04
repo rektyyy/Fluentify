@@ -208,7 +208,7 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
               />
             </svg>
             <span className="text-lg font-semibold">
-              Great job! You've completed this lesson!
+              Great job! You&apos;ve completed this lesson!
             </span>
             <button onClick={handleWin} className="btn btn-sm btn-success">
               Continue

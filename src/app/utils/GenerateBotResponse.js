@@ -1,6 +1,6 @@
 import { fetchDefaultSpeakerEmbedding, streamTTS } from "./Tts";
 
-async function generateBotResponse(messages, setBotResponse, language) {
+async function generateBotResponse(messages, setConversation, language) {
   console.log(messages);
   const speakerRef = await fetchDefaultSpeakerEmbedding();
   const response = await fetch("http://localhost:11434/api/chat", {
@@ -46,7 +46,22 @@ async function generateBotResponse(messages, setBotResponse, language) {
 
             current_sentence += token;
             generated_text += token;
-            setBotResponse(generated_text);
+            setConversation((prevConv) => {
+              if (
+                prevConv.length > 0 &&
+                prevConv[prevConv.length - 1].role === "assistant"
+              ) {
+                return [
+                  ...prevConv.slice(0, -1),
+                  { role: "assistant", content: generated_text },
+                ];
+              } else {
+                return [
+                  ...prevConv,
+                  { role: "assistant", content: generated_text },
+                ];
+              }
+            });
 
             if (token === "." || token === "?" || token === "!") {
               await streamTTS(current_sentence, speakerRef, language);
@@ -65,7 +80,6 @@ async function generateBotResponse(messages, setBotResponse, language) {
 
 export default async function sendMessage(
   message,
-  setBotReponse,
   setConversation,
   conversation,
   language
@@ -78,14 +92,9 @@ export default async function sendMessage(
 
   let generated_text = await generateBotResponse(
     [...conversation, { role: "user", content: message }],
-    setBotReponse,
+    setConversation,
     language
   );
-
-  setConversation((prevConv) => [
-    ...prevConv,
-    { role: "assistant", content: generated_text },
-  ]);
 
   return generated_text;
 }

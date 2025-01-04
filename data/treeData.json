@@ -344,7 +344,24 @@
                       }
                     ]
                   },
-                  "children": [],
+                  "children": [
+                    {
+                      "name": "a",
+                      "attributes": {
+                        "id": "lesson705105",
+                        "description": "aa",
+                        "type": 1,
+                        "finished": false,
+                        "words": [
+                          {
+                            "en": "a",
+                            "other": "a"
+                          }
+                        ]
+                      },
+                      "children": []
+                    }
+                  ],
                   "__rd3t": {
                     "id": "af36019c-b92e-486c-8e36-875645676cc3",
                     "depth": 4,
