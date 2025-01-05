@@ -42,10 +42,10 @@ export default function LessonTree({ treeData, dimensions, handleNodeClick }) {
       translate={{ x: 50, y: dimensions.height / 3 }}
       orientation="horizontal"
       onNodeClick={handleNodeClick}
-      collapsible={false}
+      collapsible={true}
       zoomable={false}
       scaleExtent={{ min: 0.1, max: 2 }}
-      separation={{ siblings: 0.55 }}
+      separation={{ siblings: 0.7 }}
       pathFunc="diagonal"
       renderCustomNodeElement={(rd3tProps) =>
         renderCustomNode({

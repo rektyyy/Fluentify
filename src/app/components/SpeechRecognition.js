@@ -4,14 +4,14 @@ import "regenerator-runtime/runtime";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { useState, useEffect, useContext } from "react";
-import UserContext from "./UserContext";
+import { useState, useEffect } from "react";
 import sendMessage from "../utils/GenerateBotResponse";
 
 export default function SpeechToText({
   setConversation,
   conversation,
   language,
+  onMessage,
 }) {
   const {
     transcript,
@@ -21,9 +21,7 @@ export default function SpeechToText({
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  const { userData } = useContext(UserContext);
   const [input, setInput] = useState("");
-
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn&apos;t support speech recognition.</span>;
   }
@@ -35,15 +33,17 @@ export default function SpeechToText({
       setInput(transcript);
     }
   }, [finalTranscript, transcript]);
+
   async function handleSend(message) {
     if (!message) return;
     console.log("SENDING MESSAGE: " + message);
+    onMessage(message);
     try {
       const response = await sendMessage(
         message,
         setConversation,
         conversation,
-        userData.language[1]
+        language[1]
       );
       console.log(response);
     } catch (error) {
@@ -55,7 +55,7 @@ export default function SpeechToText({
 
   const handleListening = () => {
     if (!listening) {
-      SpeechRecognition.startListening({ language: userData.language[0] });
+      SpeechRecognition.startListening({ language: language[0] });
     } else {
       SpeechRecognition.stopListening();
     }

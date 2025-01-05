@@ -19,7 +19,8 @@ export default function LessonType1({ lessonData, onBack, finishLesson }) {
 
   const handleWin = () => {
     finishLesson();
-    onBack();
+    localStorage.setItem("lesson", JSON.stringify(lessonData));
+    window.location.href = "/talk";
   };
 
   const handleChange = (e, index) => {

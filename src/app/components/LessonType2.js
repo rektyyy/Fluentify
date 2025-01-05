@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 
 export default function LessonType2({ lessonData, onBack, finishLesson }) {
   const [randomWords, setRandomWords] = useState([]);
-  const [feedback, setFeedback] = useState("");
   const [solvedCount, setSolvedCount] = useState(0);
   const [lessonCompleted, setLessonCompleted] = useState(false);
   const [selectedGuess, setSelectedGuess] = useState(null);
@@ -72,7 +71,6 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
   const handleGuess = (word) => {
     setSelectedGuess(word);
     const isCorrect = word === targetTranslation;
-    setFeedback(isCorrect ? "Correct!" : "Incorrect!");
     if (isCorrect) {
       setSolvedCount((prev) => prev + 1);
     }
@@ -86,14 +84,14 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
     }
     // Reset for new round
     setSelectedGuess(null);
-    setFeedback("");
     setRandomLang(Math.random() < 0.5 ? "other" : "en");
     setTargetIndex(Math.floor(Math.random() * englishWordArray.length));
   };
 
   const handleWin = () => {
     finishLesson();
-    onBack();
+    localStorage.setItem("lesson", JSON.stringify(lessonData));
+    window.location.href = "/talk";
   };
 
   return (
@@ -178,7 +176,11 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
           <div className="divider my-4"></div>
           <div className="card-actions items-center w-full">
             <div className="ml-auto space-x-3">
-              <button onClick={onBack} className="btn btn-ghost">
+              <button
+                onClick={onBack}
+                className="btn btn-ghost"
+                disabled={lessonCompleted}
+              >
                 Back
               </button>
               {!lessonCompleted && (

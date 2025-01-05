@@ -211,7 +211,40 @@
           }
         ]
       },
-      "children": []
+      "children": [
+        {
+          "name": "a",
+          "attributes": {
+            "id": "lesson831397",
+            "description": "a",
+            "type": 1,
+            "finished": false,
+            "words": [
+              {
+                "en": "a",
+                "other": "a"
+              }
+            ]
+          },
+          "children": []
+        },
+        {
+          "name": "b",
+          "attributes": {
+            "id": "lesson172771",
+            "description": "b",
+            "type": 1,
+            "finished": false,
+            "words": [
+              {
+                "en": "b",
+                "other": "b"
+              }
+            ]
+          },
+          "children": []
+        }
+      ]
     },
     {
       "name": "Lekcja 5",
@@ -269,137 +302,66 @@
       },
       "children": [
         {
-          "name": "a",
+          "name": "b",
           "attributes": {
-            "id": "lesson7",
-            "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "id": "lesson743486",
+            "description": "b",
             "type": 1,
             "finished": true,
             "words": [
               {
-                "en": "a",
-                "other": "a"
+                "en": "b",
+                "other": "b"
               }
             ]
           },
           "children": [
             {
-              "name": "b",
+              "name": "a",
               "attributes": {
-                "id": "lesson743486",
-                "description": "b",
+                "id": "lesson705105",
+                "description": "aa",
                 "type": 1,
                 "finished": true,
                 "words": [
                   {
-                    "en": "b",
-                    "other": "b"
-                  }
-                ]
-              },
-              "children": [
-                {
-                  "name": "Cars",
-                  "attributes": {
-                    "id": "lesson322524",
-                    "description": "Lesson about different car parts",
-                    "type": "2",
-                    "finished": true,
-                    "words": [
-                      {
-                        "en": "car",
-                        "other": "voz"
-                      },
-                      {
-                        "en": "wheel",
-                        "other": "roda"
-                      },
-                      {
-                        "en": "engine",
-                        "other": "motor"
-                      },
-                      {
-                        "en": "brake",
-                        "other": "freio"
-                      },
-                      {
-                        "en": "gearbox",
-                        "other": "caixa de velocidades"
-                      },
-                      {
-                        "en": "steering wheel",
-                        "other": "volante"
-                      },
-                      {
-                        "en": "seat",
-                        "other": "assento"
-                      },
-                      {
-                        "en": "mirror",
-                        "other": "espelho retrovisor"
-                      },
-                      {
-                        "en": "horn",
-                        "other": "sirene"
-                      }
-                    ]
-                  },
-                  "children": [
-                    {
-                      "name": "a",
-                      "attributes": {
-                        "id": "lesson705105",
-                        "description": "aa",
-                        "type": 1,
-                        "finished": false,
-                        "words": [
-                          {
-                            "en": "a",
-                            "other": "a"
-                          }
-                        ]
-                      },
-                      "children": []
-                    }
-                  ],
-                  "__rd3t": {
-                    "id": "af36019c-b92e-486c-8e36-875645676cc3",
-                    "depth": 4,
-                    "collapsed": false
-                  }
-                }
-              ],
-              "__rd3t": {
-                "id": "80d52dc4-483e-476b-ba8c-083573ef9267",
-                "depth": 3,
-                "collapsed": false
-              }
-            },
-            {
-              "name": "b",
-              "attributes": {
-                "id": "lesson893744",
-                "description": "b",
-                "type": 1,
-                "finished": false,
-                "words": [
-                  {
-                    "en": "b",
-                    "other": "b"
+                    "en": "a",
+                    "other": "a"
                   }
                 ]
               },
               "children": [],
               "__rd3t": {
-                "id": "59f1a957-92be-4f7b-91cf-c057731312e5",
-                "depth": 3,
+                "id": "a08dcbe2-2244-4e52-8f00-d208dbb563d6",
+                "depth": 5,
                 "collapsed": false
               }
             }
           ],
           "__rd3t": {
-            "id": "32d7ccb6-41e4-4374-b5da-7c1a17f1175a",
-            "depth": 2,
+            "id": "34a4a898-f279-492c-b3ee-604c4c98fcfd",
+            "depth": 3,
+            "collapsed": false
+          }
+        },
+        {
+          "name": "b",
+          "attributes": {
+            "id": "lesson893744",
+            "description": "b",
+            "type": 1,
+            "finished": true,
+            "words": [
+              {
+                "en": "b",
+                "other": "b"
+              }
+            ]
+          },
+          "children": [],
+          "__rd3t": {
+            "id": "24f20fd8-fd81-4ddd-a674-53cddd1406e2",
+            "depth": 3,
             "collapsed": false
           }
         }
@@ -457,7 +419,7 @@
       },
       "children": [],
       "__rd3t": {
-        "id": "976aa9fe-3710-4f42-bbfc-74bd78c1be35",
+        "id": "7a34af05-ee66-410b-8d7b-e6e88dfbdbc9",
         "depth": 1,
         "collapsed": false
       }
