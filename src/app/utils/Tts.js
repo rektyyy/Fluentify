@@ -5,7 +5,7 @@ export async function fetchDefaultSpeakerEmbedding() {
     const formData = new FormData();
     formData.append("wav_file", blob, "ref.wav");
 
-    const speakerResponse = await fetch("http://localhost:5000/clone_speaker", {
+    const speakerResponse = await fetch("api/cloneSpeaker", {
       method: "POST",
       body: formData,
     });
@@ -29,7 +29,7 @@ export async function streamTTS(text, speaker, language) {
         add_wav_header: true, // Upewnij się, że dźwięk ma poprawny nagłówek
       };
 
-      const response = await fetch("http://localhost:5000/tts_stream", {
+      const response = await fetch("api/ttsStream", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
