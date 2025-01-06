@@ -193,7 +193,7 @@ export default function CreateAssistant({
               </label>
               <input
                 type="text"
-                className="input input-bordered w-full text-base-content"
+                className="input input-bordered w-full text-base-content focus:outline-none focus:ring-0"
                 placeholder="Example: Mike"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
