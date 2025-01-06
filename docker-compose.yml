@@ -1,10 +1,27 @@
 services:
-  tts:
-    image: ghcr.io/coqui-ai/xtts-streaming-server:latest-cuda121
+  app:
+    build: .
+    container_name: inz_app
     ports:
-      - "8000:80"
+      - "3000:3000"
     environment:
-      - COQUI_TOS_AGREED=1
+      - NODE_ENV=production
+      - TTS_URL=http://tts:80
+    depends_on:
+      - ollama
+      - tts
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    container_name: inz_ollama
+    command: serve && pull llama3.1:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    environment:
+      - GIN_MODE=release
     deploy:
       resources:
         reservations:
@@ -12,3 +29,25 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+  tts:
+    image: ghcr.io/coqui-ai/xtts-streaming-server:latest-cuda121
+    container_name: inz_tts
+    ports:
+      - "8000:80" # Host port 8000 maps to container port 80
+    environment:
+      - COQUI_TOS_AGREED=1
+      - HOST=0.0.0.0 # Ensure TTS server listens on all interfaces
+      - PORT=80 # Explicitly set the port to 80
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - tts_models:/root/.local/share/coqui/models
+
+volumes:
+  ollama:
+  tts_models:

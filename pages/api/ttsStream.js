@@ -11,8 +11,8 @@ export default async function handler(req, res) {
         error: "Missing required speaker data",
       });
     }
-
-    const response = await fetch("http://localhost:8000/tts_stream", {
+    const ttsUrl = process.env.TTS_URL || "http://tts:80";
+    const response = await fetch(`${ttsUrl}/tts_stream`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
