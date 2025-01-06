@@ -42,10 +42,10 @@ export default function Home() {
       <div className="min-h-screen flex flex-col items-center justify-center bg-base-200 p-4">
         <div className="card w-full max-w-lg bg-base-100 shadow-xl">
           <div className="card-body text-base-content">
-            <h2 className="card-title text-2xl mb-4">Welcome to AIang</h2>
+            <h2 className="card-title text-2xl mb-4">Welcome to Fluentify</h2>
             <p className="mb-4">
-              This is a language learning platform. Please create an account to
-              continue.
+              This is a language learning platform using AI to help you achive
+              your language goals. Please create an account to continue.
             </p>
             <button
               onClick={() => setCreating(true)}

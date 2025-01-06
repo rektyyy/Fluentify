@@ -9,7 +9,7 @@ export async function streamTTS(text, speaker, language) {
         gpt_cond_latent: speaker.gpt_cond_latent,
         speaker_embedding: speaker.speaker_embedding,
         stream_chunk_size: 512,
-        add_wav_header: true, // Upewnij się, że dźwięk ma poprawny nagłówek
+        add_wav_header: true,
       };
 
       const response = await fetch("api/ttsStream", {
@@ -22,7 +22,7 @@ export async function streamTTS(text, speaker, language) {
 
       if (!response.ok) {
         console.error("Error: ", response.statusText);
-        return reject(response.statusText); // Zwróć błąd, jeśli wystąpi problem z żądaniem
+        return reject(response.statusText);
       }
 
       const reader = response.body.getReader();
@@ -34,54 +34,46 @@ export async function streamTTS(text, speaker, language) {
         if (done) break;
 
         if (first) {
-          console.log("First audio chunk received");
           first = false;
         }
 
         if (value) {
-          audioChunks.push(value); // Dodaj fragmenty do tablicy audio
+          audioChunks.push(value);
         }
       }
-
-      // Utwórz Blob z fragmentów audio z poprawnym typem MIME
       const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-      console.log("Audio Blob:", audioBlob.type, audioBlob.size);
 
       // Odtwórz audio w przeglądarce
       playAudio(audioBlob, resolve);
     } catch (error) {
       console.error("Error in TTS stream:", error);
-      reject(error); // Zwróć błąd, jeśli wystąpi problem w trakcie przetwarzania
+      reject(error);
     }
   });
 }
 
 function playAudio(audioBlob, resolve) {
-  // Sprawdzenie, czy istnieje aktywne odtwarzanie i zatrzymanie poprzedniego
   if (currentAudio) {
     currentAudio.pause();
-    currentAudio.currentTime = 0; // Resetuj czas odtwarzania
+    currentAudio.currentTime = 0;
   }
 
   const audioUrl = URL.createObjectURL(audioBlob);
   const audio = new Audio(audioUrl);
 
-  // Ustaw referencję do aktualnego dźwięku
   currentAudio = audio;
 
   audio.oncanplaythrough = () => {
-    console.log("Audio is ready to play");
     audio.play();
   };
 
   audio.onended = () => {
-    console.log("Audio finished playing");
-    currentAudio = null; // Resetuj referencję po zakończeniu odtwarzania
-    resolve(true); // Rozwiąż obietnicę po zakończeniu odtwarzania
+    currentAudio = null;
+    resolve(true);
   };
 
   audio.onerror = (e) => {
     console.error("Error playing audio:", e);
-    resolve(false); // Rozwiąż obietnicę, nawet jeśli wystąpi błąd
+    resolve(false);
   };
 }

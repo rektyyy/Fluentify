@@ -121,7 +121,7 @@ export default function Page() {
     }
 
     if (isEditing) {
-      // Modyfikacja istniejącej lekcji
+      // Lesson modification
 
       const updatedLesson = {
         ...selectedNode,
@@ -147,7 +147,7 @@ export default function Page() {
       setSelectedNode(updatedLesson);
       saveTreeData(updatedTreeData);
     } else {
-      // Dodanie nowej lekcji
+      // Addition of new lesson
       const newLesson = {
         name: lessonName,
         attributes: {
@@ -182,8 +182,6 @@ export default function Page() {
   };
 
   const handleNodeClick = (nodeData) => {
-    console.log("nodeData", nodeData);
-    console.log("type", nodeData.data.attributes.type);
     setSelectedNode(nodeData.data);
   };
 
@@ -300,7 +298,12 @@ export default function Page() {
     setDisplayLesson(!displayLesson);
   };
 
-  if (!treeData) return <div>Loading...</div>;
+  if (!treeData)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
 
   if (displayLesson && selectedNode.attributes.type == "1") {
     return (

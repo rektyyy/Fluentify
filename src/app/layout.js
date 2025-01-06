@@ -33,7 +33,6 @@ export default function RootLayout({ children }) {
           <AppNavbar />
 
           <main className="flex-1 flex flex-col overflow-hidden">
-            {/* Children will be the page-specific content */}
             {children}
           </main>
         </body>

@@ -18,7 +18,6 @@ export default function ThemeToggle() {
   }, []);
 
   const handleChange = () => {
-    // Toggle the theme manually and update checkbox state
     const newTheme = isDark ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", newTheme);
     setIsDark(!isDark);

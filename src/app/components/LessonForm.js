@@ -1,5 +1,6 @@
 import generateLessonWords from "../utils/GenerateLesson";
 import { useState } from "react";
+
 export default function LessonForm({
   lessonName,
   lessonDescription,
@@ -54,7 +55,6 @@ export default function LessonForm({
       const otherWords = lessonWords.words.map((word) => word.other).join(",");
       setEnglishWord(englishWords);
       setOtherLanguageWord(otherWords);
-      console.log("Generated Lesson Words:", lessonWords);
     } catch (error) {
       console.error("Error generating words:", error);
     } finally {

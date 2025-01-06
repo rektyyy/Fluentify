@@ -15,17 +15,14 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
     [lessonData]
   );
 
-  // Pick a random language for the target word
   const [randomLang, setRandomLang] = useState(() =>
     Math.random() < 0.5 ? "other" : "en"
   );
 
-  // Pick a random index for the target word
   const [targetIndex, setTargetIndex] = useState(() =>
     Math.floor(Math.random() * englishWordArray.length)
   );
 
-  // Identify the target word and its translation
   const targetWord =
     randomLang === "en"
       ? englishWordArray[targetIndex]
@@ -36,7 +33,6 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
       ? otherWordArray[targetIndex]
       : englishWordArray[targetIndex];
 
-  // Generate random answer choices
   const generateRandomWords = useCallback(() => {
     const wordsSource = randomLang === "en" ? otherWordArray : englishWordArray;
     const correctWord =
@@ -44,30 +40,25 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
         ? otherWordArray[targetIndex]
         : englishWordArray[targetIndex];
 
-    // Take random unique words from the source array
     const shuffled = [...wordsSource]
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
-    // Ensure correct word is included
     if (!shuffled.includes(correctWord)) {
       shuffled.pop();
       shuffled.push(correctWord);
     }
 
-    // Shuffle final array
     shuffled.sort(() => 0.5 - Math.random());
     setRandomWords(shuffled);
   }, [englishWordArray, otherWordArray, targetIndex, randomLang]);
 
-  // On component mount / target changes, generate new random words
   useEffect(() => {
     if (englishWordArray.length > 0 && !lessonCompleted) {
       generateRandomWords();
     }
   }, [englishWordArray.length, generateRandomWords, lessonCompleted]);
 
-  // Guess handler
   const handleGuess = (word) => {
     setSelectedGuess(word);
     const isCorrect = word === targetTranslation;
@@ -76,13 +67,11 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
     }
   };
 
-  // Handle next attempt or finish
   const handleNext = () => {
     if (solvedCount >= lessonData.attributes.words.length) {
       setLessonCompleted(true);
       return;
     }
-    // Reset for new round
     setSelectedGuess(null);
     setRandomLang(Math.random() < 0.5 ? "other" : "en");
     setTargetIndex(Math.floor(Math.random() * englishWordArray.length));

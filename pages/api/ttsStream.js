@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Get speaker data from somewhere (session/localStorage/etc)
     const { speaker_embedding, gpt_cond_latent } = req.body;
 
     if (!speaker_embedding || !gpt_cond_latent) {

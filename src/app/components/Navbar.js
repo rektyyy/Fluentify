@@ -46,7 +46,7 @@ export default function AppNavbar() {
       {/* Left side (brand) */}
       <div className="flex-1">
         <a href="/" className="btn btn-ghost text-xl">
-          AIang
+          Fluentify
         </a>
         {/* Flag image if userData exists */}
         {userData?.language?.[1] && (

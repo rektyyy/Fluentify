@@ -6,16 +6,15 @@ async function generateBotResponse(
   language,
   speakerRef
 ) {
-  console.log(messages);
   const response = await fetch("http://localhost:11434/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "llama3.1", // Replace with your model name
-      messages: messages, // Messages should be an array of message objects
-      stream: true, // Enable streaming
+      model: "llama3.1",
+      messages: messages,
+      stream: true,
     }),
   });
 
