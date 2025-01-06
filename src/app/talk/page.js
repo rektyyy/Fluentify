@@ -4,17 +4,19 @@ import { useState, useContext, useEffect } from "react";
 import dynamic from "next/dynamic";
 import ChatHistory from "../components/ChatHistory";
 import UserContext from "../components/UserContext";
+import CreateAssistant from "../components/CreateAssistant";
 
 const SpeechToText = dynamic(() => import("../components/SpeechRecognition"), {
   ssr: false,
 });
 
 export default function Page() {
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const [conversation, setConversation] = useState([]);
   const [lesson, setLesson] = useState(null);
   const [usedWords, setUsedWords] = useState(new Set());
   const [showCongrats, setShowCongrats] = useState(false);
+  const [showCreate, setShowCreate] = useState(false);
 
   useEffect(() => {
     // Check localStorage for lesson data
@@ -29,11 +31,15 @@ export default function Page() {
       const systemPrompt = [
         {
           role: "system",
-          content: `You are a large language model known as Llama, designed to assist users in learning languages. Please respond to the user's queries only in ${
+          content: `You are a large language model known as ${
+            userData.assistantName
+          }, designed to assist users in learning languages. You are a master in language teachin. Please respond to the user's queries only in ${
             userData.language[0]
           }. If you will not comply with language requirement user will fail lesson. Address user as ${
             userData.name
-          }. Your goal is to help the user learn the language. Try not to use numbers or symbols in your responses. If you notice user spelling mistake you can correct it.${
+          }. Your goal is to help the user learn the language. Try not to use numbers or symbols in your responses. If you notice user spelling mistake you can correct it. User describes your behavior as "${
+            userData.prompt
+          }". ${
             lesson
               ? `This lesson name is: ${lesson.name} and description: "${
                   lesson.attributes.description
@@ -80,7 +86,15 @@ export default function Page() {
     setLesson(null);
     setUsedWords(new Set());
   };
-
+  if (showCreate || userData.assistantName === undefined) {
+    return (
+      <CreateAssistant
+        setShowCreate={setShowCreate}
+        userData={userData}
+        setUserData={setUserData}
+      />
+    );
+  }
   return (
     <div className="flex flex-col h-screen">
       {showCongrats && (
@@ -147,6 +161,8 @@ export default function Page() {
         conversation={conversation}
         language={userData.language}
         onMessage={(message) => checkWordsInSentence(lesson, message)}
+        speakerRef={userData.speakerRef}
+        setShowCreate={setShowCreate}
       />
     </div>
   );

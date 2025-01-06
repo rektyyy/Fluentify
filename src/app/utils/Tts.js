@@ -1,20 +1,3 @@
-export async function fetchDefaultSpeakerEmbedding() {
-  try {
-    const response = await fetch("http://localhost:3000/female.wav");
-    const blob = await response.blob();
-    const formData = new FormData();
-    formData.append("wav_file", blob, "ref.wav");
-
-    const speakerResponse = await fetch("api/cloneSpeaker", {
-      method: "POST",
-      body: formData,
-    });
-    return await speakerResponse.json();
-  } catch (error) {
-    console.error("Error fetching default speaker embedding:", error);
-  }
-}
-
 let currentAudio = null;
 
 export async function streamTTS(text, speaker, language) {

@@ -1,8 +1,12 @@
-import { fetchDefaultSpeakerEmbedding, streamTTS } from "./Tts";
+import { streamTTS } from "./Tts";
 
-async function generateBotResponse(messages, setConversation, language) {
+async function generateBotResponse(
+  messages,
+  setConversation,
+  language,
+  speakerRef
+) {
   console.log(messages);
-  const speakerRef = await fetchDefaultSpeakerEmbedding();
   const response = await fetch("http://localhost:11434/api/chat", {
     method: "POST",
     headers: {
@@ -82,7 +86,8 @@ export default async function sendMessage(
   message,
   setConversation,
   conversation,
-  language
+  language,
+  speakerRef
 ) {
   if (!message) return;
   setConversation((prevConv) => [
@@ -93,7 +98,8 @@ export default async function sendMessage(
   let generated_text = await generateBotResponse(
     [...conversation, { role: "user", content: message }],
     setConversation,
-    language
+    language,
+    speakerRef
   );
 
   return generated_text;

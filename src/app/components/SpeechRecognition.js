@@ -12,6 +12,8 @@ export default function SpeechToText({
   conversation,
   language,
   onMessage,
+  setShowCreate,
+  speakerRef,
 }) {
   const {
     transcript,
@@ -43,7 +45,8 @@ export default function SpeechToText({
         message,
         setConversation,
         conversation,
-        language[1]
+        language[1],
+        speakerRef
       );
       console.log(response);
     } catch (error) {
@@ -75,6 +78,24 @@ export default function SpeechToText({
   return (
     <div className="flex-none p-4 bg-base-200 overflow-hidden">
       <div className="flex gap-2 items-center">
+        <button className="btn btn-primary" onClick={() => setShowCreate(true)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-10 w-10"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"
+            />
+            <circle cx="12" cy="10" r="3" />
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+        </button>
         <input
           type="text"
           className="input input-bordered w-full"
