@@ -1,4 +1,4 @@
-# Project README
+# Fluentify
 
 ## How to Start
 
