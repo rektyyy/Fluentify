@@ -114,7 +114,7 @@ export default function Page() {
               />
             </svg>
             <span>
-              Congratulations! You've successfully used all the words!
+              Congratulations! You&apos;ve successfully used all the words!
             </span>
           </div>
         </div>

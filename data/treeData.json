@@ -218,7 +218,7 @@
             "id": "lesson831397",
             "description": "a",
             "type": 1,
-            "finished": false,
+            "finished": true,
             "words": [
               {
                 "en": "a",
@@ -226,7 +226,12 @@
               }
             ]
           },
-          "children": []
+          "children": [],
+          "__rd3t": {
+            "id": "cb7c9001-bcb4-4db5-a44b-ab57e64a493a",
+            "depth": 2,
+            "collapsed": false
+          }
         },
         {
           "name": "b",

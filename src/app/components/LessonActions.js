@@ -36,7 +36,7 @@ const LessonActions = ({
               : "btn btn-success space-x-2"
           }
         >
-          Let&apos;s Learn!
+          Let&apos;s learn!
         </button>
         <button
           onClick={handleAddLesson}
@@ -60,7 +60,7 @@ const LessonActions = ({
               d="M12 4v16m8-8H4"
             />
           </svg>
-          <span>Add Lesson</span>
+          <span>Add</span>
         </button>
         <>
           <button
@@ -85,7 +85,7 @@ const LessonActions = ({
                 d="M15.232 5.232l3.536 3.536M9 19l-5 1 1-5 11-11 3.536 3.536-11 11z"
               />
             </svg>
-            <span>Modify Lesson</span>
+            <span>Modify</span>
           </button>
 
           <button
@@ -110,7 +110,7 @@ const LessonActions = ({
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
-            <span>Delete Lesson</span>
+            <span>Delete</span>
           </button>
         </>
       </div>

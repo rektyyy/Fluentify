@@ -111,9 +111,7 @@ export default function LessonForm({
             Select lesson type
           </option>
           <option value="1">Translation</option>
-          <option value="2">Select correct word</option>
-          <option value="3">Fill sentence</option>
-          <option value="4">Write sentence</option>
+          <option value="2">Match the meaning</option>
         </select>
 
         <div className="flex gap-2 items-center mt-4">

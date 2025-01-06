@@ -128,7 +128,7 @@ export default function LessonType2({ lessonData, onBack, finishLesson }) {
               className="modal bg-base-100 text-base-content"
             >
               <form method="dialog" className="modal-box">
-                <h3 className="font-bold text-lg">Match the Meaning</h3>
+                <h3 className="font-bold text-lg">Match the meaning</h3>
                 <p className="py-4"></p>
                 This lesson helps you practice matching words between English
                 and another language. You will be presented with a word in one
