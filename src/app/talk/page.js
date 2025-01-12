@@ -33,7 +33,7 @@ export default function Page() {
           role: "system",
           content: `You are a large language model known as ${
             userData.assistantName
-          }, designed to assist users in learning languages. You are a master in language teachin. Please respond to the user's queries only in ${
+          }, designed to assist users in learning languages. You are a master in language teaching. Please respond to the user's queries only in ${
             userData.language[0]
           }. If you will not comply with language requirement user will fail lesson. Address user as ${
             userData.name
