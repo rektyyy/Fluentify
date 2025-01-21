@@ -44,7 +44,7 @@ export default function Home() {
           <div className="card-body text-base-content">
             <h2 className="card-title text-2xl mb-4">Welcome to Fluentify</h2>
             <p className="mb-4">
-              This is a language learning platform using AI to help you achive
+              This is a language learning platform using AI to help you achieve
               your language goals. Please create an account to continue.
             </p>
             <button
