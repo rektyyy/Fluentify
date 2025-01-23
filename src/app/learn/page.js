@@ -8,6 +8,7 @@ import LessonTree from "../components/LessonTree";
 import LessonActions from "../components/LessonActions";
 import LessonForm from "../components/LessonForm";
 import UserContext from "../components/UserContext";
+import { set } from "zod";
 
 export default function Page() {
   const [treeData, setTreeData] = useState(null);
@@ -92,6 +93,7 @@ export default function Page() {
         allLessons: userData.allLessons + 1,
       }),
     });
+    setUserData({ ...userData, allLessons: userData.allLessons + 1 });
   }
 
   const handleSubmit = (e) => {
@@ -348,7 +350,6 @@ export default function Page() {
           handleSubmit={handleSubmit}
           handleCancelChanges={handleCancelChanges}
           isEditing={isEditing}
-          language={userData.language[0]}
         />
       )}
       {!showForm && (

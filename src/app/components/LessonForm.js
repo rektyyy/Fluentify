@@ -15,7 +15,6 @@ export default function LessonForm({
   handleSubmit,
   handleCancelChanges,
   isEditing,
-  language,
 }) {
   const [isLoading, setIsLoading] = useState(false);
 
