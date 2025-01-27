@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, use } from "react";
 import dynamic from "next/dynamic";
 import ChatHistory from "../components/ChatHistory";
 import UserContext from "../components/UserContext";

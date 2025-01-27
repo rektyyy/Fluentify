@@ -79,6 +79,16 @@ export default function SpeechToText({
     resetTranscript();
   }
 
+  useEffect(() => {
+    if (conversation.length === 1) {
+      setTimeout(() => {
+        handleSend(
+          "I want you to generate a welcoming message for me. End it with a question related to the lesson if available to start a conversation."
+        );
+      }, 1000);
+    }
+  }, [conversation]);
+
   const handleListening = () => {
     if (!listening) {
       SpeechRecognition.startListening({ language: language[0] });
